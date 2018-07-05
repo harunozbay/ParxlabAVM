@@ -15,7 +15,7 @@ namespace ParxlabAVM.Models
             anatablo = new HashSet<anatablo>();
         }
 
-        public sbyte cihazdurumu { get; set; }
+        public int cihazdurumu { get; set; }
 
         public int parkid { get; set; }
 
