@@ -49,6 +49,7 @@ namespace ParxlabAVM.Helpers
             return sonuc;
 
         }
+
         public List<ZamanAraligiVerisi> AylaraGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             /*
@@ -86,6 +87,7 @@ namespace ParxlabAVM.Helpers
             return sonuc;
 
         }
+
         public List<ZamanAraligiVerisi> YillaraGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             /*
@@ -137,9 +139,9 @@ namespace ParxlabAVM.Helpers
         {
             return ZamanDilimindeGirenArac(parkId, baslangic, bitis, 604800);
         }
-
-
-        public List<ZamanAraligiVerisi> ZamanDilimindeAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis, int aralik)
+        
+        public List<ZamanAraligiVerisi> ZamanDilimindeAraclarınHarcadigiToplamZaman
+            (int parkId, DateTime baslangic, DateTime bitis, int aralik)
         {
             /*
             * Bu fonksiyon verilen zaman aralığında id'si verilen parkta araçların geçirdiği toplam zamanın grafiğinin çizilmesi için kullanılır
@@ -191,7 +193,7 @@ namespace ParxlabAVM.Helpers
                     else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
                     {
                         // Dilimin içinde girip çıkmış
-                        toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                        toplam += ((DateTime)item.cikiszamani).Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
                     }
                     else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) >= 0)
                     {
@@ -202,6 +204,97 @@ namespace ParxlabAVM.Helpers
                     {
                         //Dilim başlangıcından önce girip, dilim sonundan sonra çıkmış
                         toplam += aralik / 3600.0;
+                    }
+                }
+
+                sonuc.Add(new ZamanAraligiVerisi
+                {
+                    Baslangic = dilimBasi,
+                    Bitis = dilimSonu,
+                    Deger = toplam
+                });
+
+                dilimBasi = dilimSonu;
+            }
+            return sonuc;
+
+        }
+
+        public List<ZamanAraligiVerisi> SaatlereGoreAraclarınHarcadigiToplamZaman (int parkId, DateTime baslangic, DateTime bitis)
+        {
+            return ZamanDilimindeAraclarınHarcadigiToplamZaman(parkId, baslangic, bitis, 3600);
+        }
+
+        public List<ZamanAraligiVerisi> GunlereGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        {
+            return ZamanDilimindeAraclarınHarcadigiToplamZaman(parkId, baslangic, bitis, 86400);
+        }
+
+        public List<ZamanAraligiVerisi> HaftalaraGöreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        {
+            return ZamanDilimindeAraclarınHarcadigiToplamZaman(parkId, baslangic, bitis, 604800);
+        }
+
+        public List<ZamanAraligiVerisi> AylaraGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        {
+            /*
+            * Bu fonksiyon verilen zaman aralığında id'si verilen parkta araçların geçirdiği toplam zamanın grafiğinin çizilmesi için kullanılır
+            * baslangic ve bitis değerlerini aylara böler
+            * Fonksiyon her bir dilimde parkta geçirilmiş zaman miktarını(saat cinsinden),
+            * dilimin başlangıç ve bitiş zamanı ile birlikte bir ZamanAraligiVerisi nesnesine koyar
+            * Tüm dilimlerin ZamanAraligiVerisi nesnesini bir liste içinde döndürür
+            * 
+            */
+            DateTime dilimBasi, dilimSonu;
+            double toplam;
+            Model veritabani = new Model();
+            List<ZamanAraligiVerisi> sonuc = new List<ZamanAraligiVerisi>();
+            IQueryable<anatablo> araliktakiTumVeriler = (from veri in veritabani.anatablo
+                                                         where (veri.parkid == parkId
+                                                         && (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                                                                && DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
+                                                         || (DateTime.Compare(baslangic, (DateTime)veri.cikiszamani) <= 0
+                                                                && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) >= 0)//çıkış zamanı aralığın içinde
+                                                         || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) >= 0
+                                                                && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) <= 0))//Aralıktan önce girip sonra çıkmış
+                                                         select veri);
+            //Verilen zaman aralığında parkta olan araçları al
+
+            dilimBasi = baslangic;
+            while (DateTime.Compare(dilimBasi, bitis) < 0)
+            {
+                dilimSonu = dilimBasi.AddMonths(1);
+                toplam = 0;
+
+                foreach (var item in (from veri in veritabani.anatablo
+                                      where (veri.parkid == parkId
+                                      && (DateTime.Compare(dilimBasi, (DateTime)veri.giriszamani) <= 0
+                                             && DateTime.Compare(dilimSonu, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
+                                      || (DateTime.Compare(dilimBasi, (DateTime)veri.cikiszamani) <= 0
+                                             && DateTime.Compare(dilimSonu, (DateTime)veri.cikiszamani) >= 0)//Çıkış zamanı aralığın içinde
+                                      || (DateTime.Compare(dilimBasi, (DateTime)veri.giriszamani) >= 0
+                                             && DateTime.Compare(dilimSonu, (DateTime)veri.cikiszamani) <= 0))//Aralıktan önce girip sonra çıkmış
+                                      select veri))
+                {
+                    if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) < 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                    {
+                        //Dilim Başlangıcından önce girip bitişinden önce çıkmış
+                        toplam += ((DateTime)item.cikiszamani).Subtract(dilimBasi).TotalSeconds / 3600.0;
+                    }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                    {
+                        // Dilimin içinde girip çıkmış
+                        toplam += ((DateTime)item.cikiszamani).Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                    }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) >= 0)
+                    {
+                        // Dilimin içinde girip, dilim bitişinden sonra çıkmış
+                        toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                    }
+                    else
+                    {
+                        //Dilim başlangıcından önce girip, dilim sonundan sonra çıkmış
+                        toplam += dilimSonu.Subtract(dilimBasi).TotalSeconds / 3600.0;
                     }
                 }
 
