@@ -219,6 +219,40 @@ namespace ParxlabAVM.Helpers
         }
 
 
+        public List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut,List<ZamanAraligiVerisi> veriler)
+        {
+            /*sonBoyut boyutunda bir ZamanAraligiVerisi listesi döndürür
+             * Haftanın içinde günlerin, gün içinde saatlerin vs bir zaman aralığında ortalamasını dödürmek için kullanılır
+             * sonuc listesinin her bir indeksi için:
+             * veriler listesinde mod(sonBoyut) indeksinde bulunan tüm verilerin değerlerinin ortalamasını
+             * ve ilk karşılaşılan indexlerdeki zaman verisini atar
+             * Örneğin haftadaki günlerin bir zaman aralığındaki ortalamasını bulmak için
+             * (örneğin bir yıl içinde pzt ortalaması 3560, salı ortalaması 4780, pazar ortalaması 7346 vs.)
+             * sonBoyut olarak 7
+             * veriler olarak da günlere göre hesap yapan fonksiyonlardan (GünlereGöreGirenArac,GünlereGöreAraclarınHarcadigiToplamZaman)
+             * birinin sonucu kullanılmalıdır
+             * 
+             */
+            List<ZamanAraligiVerisi> sonuc = new List<ZamanAraligiVerisi>(sonBoyut);
+            double toplam;
+            int tur;
+            int ilkBoyut = veriler.Count();
+
+            for (int i = 0; i < sonBoyut; i++)
+            {
+                sonuc.Add(veriler[i]); //İlk verilerin zamanları sonuca atanıyor
+                toplam = 0;
+                tur = 0;
+                while (tur * sonBoyut + i < ilkBoyut)
+                {
+                    toplam += veriler[tur * sonBoyut + i].Deger;
+                    tur++;  //Kaç farklı sayıya bakıldığını gösterir
+                }
+                sonuc[i].Deger = toplam / tur;
+            }
+
+            return sonuc;
+        }
 
     }
 }
