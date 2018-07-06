@@ -240,11 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/ParxlabAVM/Content
-/ParxlabAVM/fonts
-/ParxlabAVM/Scripts
 /ParxlabAVM/Web.config
-/ParxlabAVM/Views/Shared/_Layout.cshtml
-/ParxlabAVM/Views/_ViewStart.cshtml
-/ParxlabAVM/Web.packages.config
-/ParxlabAVM/ParxlabAVM.csprog
+

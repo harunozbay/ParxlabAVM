@@ -234,21 +234,23 @@ namespace ParxlabAVM.Helpers
              * 
              */
             List<ZamanAraligiVerisi> sonuc = new List<ZamanAraligiVerisi>(sonBoyut);
-            double toplam;
-            int tur;
+            int[] tur = new int[sonBoyut];  //Ortalamayı bulmak için toplam'ı böleceğimiz sayılar
             int ilkBoyut = veriler.Count();
 
             for (int i = 0; i < sonBoyut; i++)
             {
-                sonuc.Add(veriler[i]); //İlk verilerin zamanları sonuca atanıyor
-                toplam = 0;
-                tur = 0;
-                while (tur * sonBoyut + i < ilkBoyut)
-                {
-                    toplam += veriler[tur * sonBoyut + i].Deger;
-                    tur++;  //Kaç farklı sayıya bakıldığını gösterir
-                }
-                sonuc[i].Deger = toplam / tur;
+                sonuc.Add(veriler[i]); //İlk verilerin zamanları sonuca atanıyor ve içlerindeki değerler toplamlara ekleniyor
+                tur[i] = 1; //Tüm indexlere bir defa sayı eklendi
+                
+            }
+            for (int i = sonBoyut; i < ilkBoyut; i++)//İlk sonBoyut sayısında girdiyi zaten inceledik önceki döngüde
+            {
+                sonuc[i % sonBoyut].Deger += veriler[i].Deger; //Toplamlar Deger'de tutuluyor
+                tur[i%sonBoyut]++;  
+            }
+            for (int i = 0; i < sonBoyut; i++)
+            {
+                sonuc[i].Deger /= tur[i];
             }
 
             return sonuc;
