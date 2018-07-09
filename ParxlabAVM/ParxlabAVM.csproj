@@ -112,9 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\veriListeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GrafikVerisiOlusturucu.cs" />
+    <Compile Include="Helpers\ZamanAraligiVerisi.cs" />
     <Compile Include="Models\anatablo.cs" />
     <Compile Include="Models\cihaz.cs" />
     <Compile Include="Models\firma.cs" />
@@ -130,6 +133,9 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
+    <Content Include="Views\veriListe\Index.cshtml" />
+    <Content Include="Views\veriListe\Anatablo.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -139,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
