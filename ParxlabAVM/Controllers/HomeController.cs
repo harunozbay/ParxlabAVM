@@ -22,7 +22,14 @@ namespace ParxlabAVM.Controllers
             return View(anatablo.ToList());
         }
 
+        [HttpGet]
         public ActionResult GrafikForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GrafikForm(DateTime Giris, DateTime Cikis)
         {
             return View();
         }
