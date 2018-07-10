@@ -348,6 +348,88 @@ namespace ParxlabAVM.Helpers
 
             return sonuc;
         }
+        
+        public string GrafikVeriEtiketiOlustur(ZamanAraligiVerisi dilim, int degisendenOncekilerinSayisi,
+                                                int degisendenSonrkilerinSayisi, bool ikinciTarihiGoster)
+        {
+            /* Bu fonksiyon grafik çizilirken alt tarafa yazılacak tarihlerin belirlenmesi için kullanılır
+             * İki tarih arasındaki tek fark yalnızca ayın hangi günü olduklarıysa yıl verisini, saat ve dakikayı da yazmaya gerek yok
+             * Tarihlerin arasındaki farklı en büyük kısmı bulmak için önce tarih çıkarması yapılır
+             * Farkın içinde sırayla yıl, ay, gün, saat ve dakika sayısına bakılır.
+             * {"yyyy","MM","dd","HH","mm"} dizesinde, farkın olduğu yerin indeksi "int degisen" değişkeninde tutulur
+             * degisen, ondan önce "degisendenOncekilerinSayisi" ve sonra "degisendenSonrkilerinSayisi" sayısında indekste bulunanlar
+             * yeni bir listeye alınır
+             * Bu listeden DateTime.toString fonksiyonunda kullanılmak üzere bir string oluşturulur
+             * Fonksiyon dd/MM/yyyy HH:ss formatıyla çağrılacak, o yüzden daha önce oluşturulan listedeki elemanlar
+             * bu formata uyacak şekilde string'e ekleniyor.
+             * sonuç stringi Datetime.toString fonksiyonuyla belirleniyor, eğer ikinciTarihiGoster doğruysa ikinci tarih için de
+             * bu fonksiyon kullanılıp sonuçları birleştirip döndürülüyor.
+             */
+            int degisen;
+            string[] tamFormat = { "yyyy", "MM", "dd", "HH", "mm" };
+            string[] yeniFormat;
+            string formatStringi = "";
+            TimeSpan fark = dilim.Bitis.Subtract(dilim.Baslangic);
+            if (fark.TotalDays>=365) //Arada yıl var
+            {
+                degisen = 0;
+            }
+            else if (fark.TotalDays >= 30) //Arada ay var
+            {
+                degisen = 1;
+            }
+            else if (fark.TotalDays >= 1) //Arada gün var
+            {
+                degisen = 2;
+            }
+            else if (fark.TotalHours >= 1) //Arada saat var
+            {
+                degisen = 3;
+            }
+            else
+            {
+                degisen = 4;
+            }
+
+            yeniFormat = ArrayKesiti(tamFormat, 0 > degisen - degisendenOncekilerinSayisi ? 0 : degisen - degisendenOncekilerinSayisi,
+                tamFormat.Length < degisendenSonrkilerinSayisi - degisendenOncekilerinSayisi + 1 ? tamFormat.Length : degisendenSonrkilerinSayisi - degisendenOncekilerinSayisi + 1);
+            //Tam formatın neresinden neresine alınacağı belirlendi, ve kesit alındı
+
+            foreach (var str in yeniFormat)
+            {
+                switch (str)
+                {
+                    case ("dd"):
+                        formatStringi += "dd";
+                        break;
+                    case ("MM"):
+                        formatStringi += formatStringi.Length == 0 ? "MM" : "/" + "MM";
+                        break;
+                    case ("yyyy"):
+                        formatStringi += formatStringi.Length == 0 ? "yyyy" : "/" + "yyyy";
+                        break;
+                    case ("HH"):
+                        formatStringi += formatStringi.Length == 0 ? "HH" : " " + "HH";
+                        break;
+                    case ("mm"):
+                        formatStringi += formatStringi.Length == 0 ? "mm" : ":" + "mm";
+                        break;
+                    default:
+                        break;
+                }
+            }
+                return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+                    dilim.Baslangic.ToString(formatStringi);
+
+        }
+        public T[] ArrayKesiti<T>(this T[] veri, int indeks, int boyut)
+        {
+            T[] sonuc = new T[boyut];
+            Array.Copy(veri, indeks, sonuc, 0, boyut);
+            return sonuc;
+        }
 
     }
+
+
 }

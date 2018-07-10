@@ -15,7 +15,13 @@ namespace ParxlabAVM.Controllers
         {
 
             GrafikVeriOlusturucu olusturucu = new GrafikVeriOlusturucu();
-            return View(olusturucu.GunlereGoreAraclarınHarcadigiToplamZaman(1, new DateTime(2018, 06, 25, 0, 0, 0), new DateTime(2018, 06, 28, 23, 59, 0)));
+            List<string> kisaltmalar = new List<string>();
+            List<ZamanAraligiVerisi> veriler = olusturucu.GunlereGoreAraclarınHarcadigiToplamZaman(1, new DateTime(2018, 06, 25, 0, 0, 0), new DateTime(2018, 07, 05, 23, 59, 0));
+            foreach (var item in veriler)
+            {
+                kisaltmalar.Add(olusturucu.GrafikVeriEtiketiOlustur(item, 1, 0, true));
+            }
+            return View(kisaltmalar);
         }
         public ActionResult Anatablo()
         {

@@ -1,5 +1,5 @@
 ﻿
-@model List<ParxlabAVM.Helpers.ZamanAraligiVerisi>
+@model List<string>
 
 @{
     ViewBag.Title = "Index";
@@ -10,12 +10,6 @@
 <table class="table">
     <tr>
         <th>
-            Başlangıç
-        </th>
-        <th>
-            Bitiş
-        </th>
-        <th>
             Değer
         </th>
         <th></th>
@@ -25,13 +19,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Baslangic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bitis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deger)
+                @item
             </td>
         </tr>
     }
