@@ -6,10 +6,10 @@ using ParxlabAVM.Models;
 
 namespace ParxlabAVM.Helpers
 {
-    public class GrafikVeriOlusturucu
+    public static class GrafikVeriOlusturucu
     {
 
-        public List<ZamanAraligiVerisi> ZamanDilimindeGirenArac(int parkId, DateTime baslangic, DateTime bitis, int aralik)
+        public static List<ZamanAraligiVerisi> ZamanDilimindeGirenArac(int parkId, DateTime baslangic, DateTime bitis, int aralik)
         {
             /*
             * Bu fonksiyon verilen zaman aralığında id'si verilen parka giren araç sayısının grafiği çizilmesi için kullanılır
@@ -50,7 +50,7 @@ namespace ParxlabAVM.Helpers
 
         }
 
-        public List<ZamanAraligiVerisi> AylaraGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> AylaraGoreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             /*
             * Bu fonksiyon verilen zaman aralığında id'si verilen parka giren araç sayısının grafiği çizilmesi için kullanılır
@@ -88,7 +88,7 @@ namespace ParxlabAVM.Helpers
 
         }
 
-        public List<ZamanAraligiVerisi> YillaraGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> YillaraGoreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             /*
             * Bu fonksiyon verilen zaman aralığında id'si verilen parka giren araç sayısının grafiği çizilmesi için kullanılır
@@ -125,22 +125,22 @@ namespace ParxlabAVM.Helpers
             return sonuc;
         }
 
-        public List<ZamanAraligiVerisi> SaatlereGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> SaatlereGoreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             return ZamanDilimindeGirenArac(parkId, baslangic, bitis, 3600);
         }
 
-        public List<ZamanAraligiVerisi> GünlereGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> GunlereGoreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             return ZamanDilimindeGirenArac(parkId, baslangic, bitis, 86400);
         }
 
-        public List<ZamanAraligiVerisi> HaftalaraGöreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> HaftalaraGoreGirenArac(int parkId, DateTime baslangic, DateTime bitis)
         {
             return ZamanDilimindeGirenArac(parkId, baslangic, bitis, 604800);
         }
 
-        public List<ZamanAraligiVerisi> ZamanDilimindeAraclarınHarcadigiToplamZaman
+        public static List<ZamanAraligiVerisi> ZamanDilimindeAraclarınHarcadigiToplamZaman
             (int parkId, DateTime baslangic, DateTime bitis, int aralik)
         {
             /*
@@ -220,22 +220,22 @@ namespace ParxlabAVM.Helpers
 
         }
 
-        public List<ZamanAraligiVerisi> SaatlereGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> SaatlereGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
         {
             return ZamanDilimindeAraclarınHarcadigiToplamZaman(parkId, baslangic, bitis, 3600);
         }
 
-        public List<ZamanAraligiVerisi> GunlereGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> GunlereGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
         {
             return ZamanDilimindeAraclarınHarcadigiToplamZaman(parkId, baslangic, bitis, 86400);
         }
 
-        public List<ZamanAraligiVerisi> HaftalaraGöreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> HaftalaraGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
         {
             return ZamanDilimindeAraclarınHarcadigiToplamZaman(parkId, baslangic, bitis, 604800);
         }
 
-        public List<ZamanAraligiVerisi> AylaraGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
+        public static List<ZamanAraligiVerisi> AylaraGoreAraclarınHarcadigiToplamZaman(int parkId, DateTime baslangic, DateTime bitis)
         {
             /*
             * Bu fonksiyon verilen zaman aralığında id'si verilen parkta araçların geçirdiği toplam zamanın grafiğinin çizilmesi için kullanılır
@@ -312,7 +312,7 @@ namespace ParxlabAVM.Helpers
         }
 
 
-        public List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut, List<ZamanAraligiVerisi> veriler)
+        public static List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut, List<ZamanAraligiVerisi> veriler)
         {
             /*sonBoyut boyutunda bir ZamanAraligiVerisi listesi döndürür
              * Haftanın içinde günlerin, gün içinde saatlerin vs bir zaman aralığında ortalamasını dödürmek için kullanılır
@@ -349,7 +349,7 @@ namespace ParxlabAVM.Helpers
             return sonuc;
         }
         
-        public string GrafikVeriEtiketiOlustur(ZamanAraligiVerisi dilim, int degisendenOncekilerinSayisi,
+        public static string GrafikVeriEtiketiOlustur(ZamanAraligiVerisi dilim, int degisendenOncekilerinSayisi,
                                                 int degisendenSonrkilerinSayisi, bool ikinciTarihiGoster)
         {
             /* Bu fonksiyon grafik çizilirken alt tarafa yazılacak tarihlerin belirlenmesi için kullanılır
@@ -365,9 +365,9 @@ namespace ParxlabAVM.Helpers
              * sonuç stringi Datetime.toString fonksiyonuyla belirleniyor, eğer ikinciTarihiGoster doğruysa ikinci tarih için de
              * bu fonksiyon kullanılıp sonuçları birleştirip döndürülüyor.
              */
-            int degisen;
+            int degisen,ilkIndex,boyut;
             string[] tamFormat = { "yyyy", "MM", "dd", "HH", "mm" };
-            string[] yeniFormat;
+            List<string> yeniFormat;
             string formatStringi = "";
             TimeSpan fark = dilim.Bitis.Subtract(dilim.Baslangic);
             if (fark.TotalDays>=365) //Arada yıl var
@@ -390,39 +390,38 @@ namespace ParxlabAVM.Helpers
             {
                 degisen = 4;
             }
-
-            yeniFormat = ArrayKesiti(tamFormat, 0 > degisen - degisendenOncekilerinSayisi ? 0 : degisen - degisendenOncekilerinSayisi,
-                tamFormat.Length < degisendenSonrkilerinSayisi - degisendenOncekilerinSayisi + 1 ? tamFormat.Length : degisendenSonrkilerinSayisi - degisendenOncekilerinSayisi + 1);
+            ilkIndex = 0 > degisen - degisendenOncekilerinSayisi ? 0 : degisen - degisendenOncekilerinSayisi;
+            boyut = tamFormat.Length - ilkIndex < degisendenSonrkilerinSayisi + degisendenOncekilerinSayisi + 1 ?
+                tamFormat.Length - ilkIndex : degisendenSonrkilerinSayisi + degisendenOncekilerinSayisi + 1;
+            yeniFormat = ArrayKesiti(tamFormat, ilkIndex,boyut).ToList();
             //Tam formatın neresinden neresine alınacağı belirlendi, ve kesit alındı
 
-            foreach (var str in yeniFormat)
+            if (yeniFormat.Contains("dd"))
             {
-                switch (str)
-                {
-                    case ("dd"):
-                        formatStringi += "dd";
-                        break;
-                    case ("MM"):
-                        formatStringi += formatStringi.Length == 0 ? "MM" : "/" + "MM";
-                        break;
-                    case ("yyyy"):
-                        formatStringi += formatStringi.Length == 0 ? "yyyy" : "/" + "yyyy";
-                        break;
-                    case ("HH"):
-                        formatStringi += formatStringi.Length == 0 ? "HH" : " " + "HH";
-                        break;
-                    case ("mm"):
-                        formatStringi += formatStringi.Length == 0 ? "mm" : ":" + "mm";
-                        break;
-                    default:
-                        break;
-                }
+                formatStringi += "dd";
             }
-                return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+            if (yeniFormat.Contains("MM"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "MM" : "'/'MM";
+            }
+            if (yeniFormat.Contains("yyyy"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "yyyy" : "'/'yyyy";
+            }
+            if (yeniFormat.Contains("HH"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "HH" : " HH";
+            }
+            if (yeniFormat.Contains("mm"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "mm" : ":mm";
+            }
+            
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
                     dilim.Baslangic.ToString(formatStringi);
 
         }
-        public T[] ArrayKesiti<T>(this T[] veri, int indeks, int boyut)
+        public static T[] ArrayKesiti<T>(this T[] veri, int indeks, int boyut)
         {
             T[] sonuc = new T[boyut];
             Array.Copy(veri, indeks, sonuc, 0, boyut);
