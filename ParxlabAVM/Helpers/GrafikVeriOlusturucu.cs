@@ -312,6 +312,22 @@ namespace ParxlabAVM.Helpers
         }
 
 
+        public static double AnlikDolulukOrani(int parkId,DateTime an)
+        {
+            /* Bu fonksiyon verilen bir anda (saniyeye kadar çözünürlükle) verilen bir parktaki cihazların doluluk oranını verir
+             * Tüm anatablolarda giriş zamanı verilen andan önce çıkış zamanı ise sonra olanlar sayılır
+             * Verilen parktaki tüm cihazların sayısına bölünür
+             */
+            Model veritabani = new Model();
+            double tumCihazlarinSayisi = (from cihaz in veritabani.cihaz where cihaz.parkid == parkId select cihaz).Count();
+            double doluCihazlarinSayisi = (from kayit in veritabani.anatablo
+                                           where
+                                            (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0
+                                            && DateTime.Compare((DateTime)kayit.cikiszamani, an) >= 0)
+                                           select kayit).Count();
+            return doluCihazlarinSayisi / tumCihazlarinSayisi;
+        }
+
         public static List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut, List<ZamanAraligiVerisi> veriler)
         {
             /*sonBoyut boyutunda bir ZamanAraligiVerisi listesi döndürür
