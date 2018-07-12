@@ -8,7 +8,7 @@ namespace ParxlabAVM.Models
     public partial class Model : DbContext
     {
         public Model()
-            : base("name=ModelParxlab")
+            : base("name=ModelMsSql")
         {
         }
 
@@ -24,6 +24,14 @@ namespace ParxlabAVM.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<anatablo>()
+                .Property(e => e.giriszamani)
+                .HasPrecision(0);
+
+            modelBuilder.Entity<anatablo>()
+                .Property(e => e.cikiszamani)
+                .HasPrecision(0);
+
             modelBuilder.Entity<anatablo>()
                 .Property(e => e.aracplakasi)
                 .IsUnicode(false);

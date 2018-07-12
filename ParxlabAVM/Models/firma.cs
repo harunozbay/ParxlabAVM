@@ -6,7 +6,7 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("parxlab.firma")]
+    [Table("firma")]
     public partial class firma
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,7 +26,7 @@ namespace ParxlabAVM.Models
 
         public int yetkiliid { get; set; }
 
-        public int id { get; set; }
+        public int firmaid { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<anatablo> anatablo { get; set; }

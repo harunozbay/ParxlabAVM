@@ -6,7 +6,7 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("parxlab.yetki")]
+    [Table("yetki")]
     public partial class yetki
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

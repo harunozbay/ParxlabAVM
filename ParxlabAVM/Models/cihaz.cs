@@ -6,7 +6,7 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("parxlab.cihaz")]
+    [Table("cihaz")]
     public partial class cihaz
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -15,7 +15,11 @@ namespace ParxlabAVM.Models
             anatablo = new HashSet<anatablo>();
         }
 
-        public int cihazdurumu { get; set; }
+        public short cihazdurumu { get; set; }
+
+        public double? enlem { get; set; }
+
+        public double? boylam { get; set; }
 
         public int parkid { get; set; }
 

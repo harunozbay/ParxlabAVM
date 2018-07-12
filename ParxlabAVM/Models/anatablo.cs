@@ -6,20 +6,21 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("parxlab.anatablo")]
+    [Table("anatablo")]
     public partial class anatablo
     {
-        public int cihazid { get; set; }
+        public int firmaid { get; set; }
 
         public int parkid { get; set; }
 
-        public int firmaid { get; set; }
+        public int cihazid { get; set; }
 
+        [Column(TypeName = "datetime2")]
         public DateTime? giriszamani { get; set; }
 
+        [Column(TypeName = "datetime2")]
         public DateTime? cikiszamani { get; set; }
 
-        [Required]
         [StringLength(45)]
         public string aracplakasi { get; set; }
 
