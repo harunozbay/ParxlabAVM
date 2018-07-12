@@ -421,6 +421,64 @@ namespace ParxlabAVM.Helpers
                     dilim.Baslangic.ToString(formatStringi);
 
         }
+
+        public static string GrafikVeriEtiketiOlustur(ZamanAraligiVerisi dilim, string[] yeniFormat, bool ikinciTarihiGoster)
+        {
+            /* Bu fonksiyon grafik çizilirken alt tarafa yazılacak tarihlerin belirlenmesi için kullanılır
+             * İki tarih arasındaki tek fark yalnızca ayın hangi günü olduklarıysa yıl verisini, saat ve dakikayı da yazmaya gerek yok
+             * Etikette hangi tarih verilerinin girileceği el ile varilir
+             * {"dd","MM","HH"} gibi
+             * "yyyy","MM","dd","HH","mm" şeklinde verilmeli, büyük-küçük harf farkına dikkat edilmelidir
+             * yeniFormat listesinden DateTime.toString fonksiyonunda kullanılmak üzere bir string oluşturulur
+             * Fonksiyon dd/MM/yyyy HH:ss formatıyla çağrılacak, o yüzden daha önce oluşturulan listedeki elemanlar
+             * bu formata uyacak şekilde string'e ekleniyor.
+             * sonuç stringi Datetime.toString fonksiyonuyla belirleniyor, eğer ikinciTarihiGoster doğruysa ikinci tarih için de
+             * bu fonksiyon kullanılıp sonuçları birleştirip döndürülüyor.
+             */
+            string formatStringi = "";
+            
+            if (yeniFormat.Contains("dd"))
+            {
+                formatStringi += "dd";
+            }
+            if (yeniFormat.Contains("MM"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "MM" : "'/'MM";
+            }
+            if (yeniFormat.Contains("yyyy"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "yyyy" : "'/'yyyy";
+            }
+            if (yeniFormat.Contains("HH"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "HH" : " HH";
+            }
+            if (yeniFormat.Contains("mm"))
+            {
+                formatStringi += formatStringi.Length == 0 ? "mm" : ":mm";
+            }
+
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+                    dilim.Baslangic.ToString(formatStringi);
+
+        }
+
+        public static string GrafikVeriEtiketiOlustur(ZamanAraligiVerisi dilim, bool ikinciTarihiGoster,string isimSekli, string dil)
+        {
+            /* Bu fonksiyon grafik çizilirken alt tarafa yazılacak tarihlerin belirlenmesi için kullanılır
+             * Verilen tarihe göre haftanın günü verisi döndürür
+             * Eğer isimSekli "ddd" ise "Pzt", "Pzr" şeklinde, "dddd" ise "Pazartesi", pazar şeklinde dödürür
+             * dil hangi dilde döndürüleceğini gösterir "tr-Tr" gibi
+             * eğer ikinciTarihiGoster doğruysa ikinci tarih için de
+             * bu fonksiyon kullanılıp sonuçları birleştirip döndürülüyor.
+             */
+            System.Globalization.CultureInfo kultur = new System.Globalization.CultureInfo(dil);
+
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(isimSekli, kultur) + " - " + dilim.Bitis.ToString(isimSekli, kultur) :
+                    dilim.Baslangic.ToString(isimSekli, kultur);
+
+        }
+
         public static T[] ArrayKesiti<T>(this T[] veri, int indeks, int boyut)
         {
             T[] sonuc = new T[boyut];
