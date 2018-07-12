@@ -15,10 +15,10 @@ namespace ParxlabAVM.Controllers
         {
 
             List<string> kisaltmalar = new List<string>();
-            List<ZamanAraligiVerisi> veriler = GrafikVeriOlusturucu.HaftalaraGoreGirenArac(1, new DateTime(2018, 06, 25, 0, 0, 0), new DateTime(2018, 07, 05, 23, 59, 0));
+            List<ZamanAraligiVerisi> veriler = GrafikVeriOlusturucu.GunlereGoreGirenArac(1, new DateTime(2018, 06, 25, 0, 0, 0), new DateTime(2018, 07, 05, 23, 59, 0));
             foreach (var item in veriler)
             {
-                kisaltmalar.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(item, 1, 0, false));
+                kisaltmalar.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(item, true,"ddd", "tr-TR"));
             }
             return View(kisaltmalar);
         }
