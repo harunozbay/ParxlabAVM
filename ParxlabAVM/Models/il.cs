@@ -6,7 +6,7 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("parxlab.il")]
+    [Table("il")]
     public partial class il
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
