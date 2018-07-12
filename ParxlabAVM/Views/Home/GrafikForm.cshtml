@@ -11,7 +11,7 @@
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker6'>
                     <laber for="datetimepicker6">Giriş Zamanı </laber>
-                    <input type='text' class="form-control" />
+                    <input type='text' name="Giris" class="form-control" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker7'>
                     <laber for="datetimepicker7">Çıkış Zamanı </laber>
-                    <input type='text' class="form-control" />
+                    <input type='text' name="Cikis" class="form-control" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -39,9 +39,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(function () {
-                $('#datetimepicker6').datetimepicker();
+                $('#datetimepicker6').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm'
+                });
                 $('#datetimepicker7').datetimepicker({
-                    useCurrent: false //Important! See issue #1075
+                    useCurrent: false, //Important! See issue #1075
+                    format: 'DD/MM/YYYY HH:mm'
                 });
                 $("#datetimepicker6").on("dp.change", function (e) {
                     $('#datetimepicker7').data("DateTimePicker").minDate(e.date);

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ParxlabAVM.Models;
+using ParxlabAVM.Helpers;
+using System.Globalization;
 
 namespace ParxlabAVM.Controllers
 {
@@ -17,21 +19,60 @@ namespace ParxlabAVM.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            
-            var anatablo = db.anatablo.Include(a => a.cihaz).Include(a => a.firma).Include(a => a.kullanici).Include(a => a.parkyeri);
+            /*Random rnd = new Random();
+            Model veritabani = new Model();
+            for (int i = 0; i < 11; i++)
+            {
+
+                int gun = rnd.Next(18, 24);
+                int saat = rnd.Next(0, 20);
+                int saat2 = rnd.Next(saat, 24);
+                veritabani.anatablo.Add(new anatablo
+                {
+                    
+                    parkid = 1,
+                    aracplakasi = "06 ASD 34",
+                    cihazid = 1,
+                    giriszamani = new DateTime(2018, 06, 24, saat, 15, 0),
+                    cikiszamani = new DateTime(2018, 06, 24, saat2, 35, 0),
+                    kullaniciid = "Ankabeta",
+                    firmaid = 1
+                });
+
+                
+            }
+
+            veritabani.SaveChanges();*/
+
+           
+
+            var anatablo = db.anatablo.Include(a => a.cihaz).Include(a => a.firma).Include(a => a.kullanici).Include(a => a.parkyeri).OrderBy(a => a.giriszamani);
             return View(anatablo.ToList());
         }
 
+        //sayfa getirici
         [HttpGet]
         public ActionResult GrafikForm()
         {
             return View();
         }
 
+        //veri gönderici
         [HttpPost]
-        public ActionResult GrafikForm(DateTime Giris, DateTime Cikis)
+        public ActionResult GrafikForm(string Giris, string Cikis)
         {
-            return View();
+            GrafikVeriOlusturucu gvo = new GrafikVeriOlusturucu();
+            DateTime girisZamani = DateTime.ParseExact(Giris, "dd/MM/yyyy HH:mm",null );
+            DateTime cikisZamani = DateTime.ParseExact(Cikis, "dd/MM/yyyy HH:mm", null);
+
+            List<double> arabaSayisi = new List<double>();
+            foreach (var i in gvo.GünlereGöreGirenArac(1, girisZamani, cikisZamani))
+            {
+                arabaSayisi.Add(i.Deger);
+
+            }
+
+            return View("GrafikCiz", arabaSayisi);
         }
 
         // GET: Home/Details/5
