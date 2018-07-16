@@ -71,7 +71,7 @@ namespace ParxlabAVM.Helpers
             dilimBasi = baslangic;
             while (DateTime.Compare(dilimBasi, bitis) < 0)
             {
-                dilimSonu = dilimBasi.AddMonths(1);
+                dilimSonu = dilimBasi.AddDays(1).AddMonths(1).AddDays(-1);//Ayın 31'i olması gereken zamanlarda dilimsonu ayın 30'una ayarlanmasın diye
                 sonuc.Add(new ZamanAraligiVerisi
                 {
                     Baslangic = dilimBasi,
@@ -175,9 +175,8 @@ namespace ParxlabAVM.Helpers
                 dilimSonu = dilimBasi.AddSeconds(aralik);
                 toplam = 0;
 
-                foreach (var item in (from veri in veritabani.anatablo
-                                      where (veri.parkid == parkId
-                                      && (DateTime.Compare(dilimBasi, (DateTime)veri.giriszamani) <= 0
+                foreach (var item in (from veri in araliktakiTumVeriler
+                                      where ((DateTime.Compare(dilimBasi, (DateTime)veri.giriszamani) <= 0
                                              && DateTime.Compare(dilimSonu, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
                                       || (DateTime.Compare(dilimBasi, (DateTime)veri.cikiszamani) <= 0
                                              && DateTime.Compare(dilimSonu, (DateTime)veri.cikiszamani) >= 0)//Çıkış zamanı aralığın içinde
@@ -263,7 +262,7 @@ namespace ParxlabAVM.Helpers
             dilimBasi = baslangic;
             while (DateTime.Compare(dilimBasi, bitis) < 0)
             {
-                dilimSonu = dilimBasi.AddMonths(1);
+                dilimSonu = dilimBasi.AddDays(1).AddMonths(1).AddDays(-1);//Ayın 31'i olması gereken zamanlarda dilimsonu ayın 30'una ayarlanmasın diye
                 toplam = 0;
 
                 foreach (var item in (from veri in veritabani.anatablo
@@ -328,6 +327,77 @@ namespace ParxlabAVM.Helpers
             return doluCihazlarinSayisi / tumCihazlar.Count();
         }
 
+        public static List<ZamanAraligiVerisi> ZamanDilimindeCihazDolulukOranı(int cihazId, DateTime baslangic, DateTime bitis, int aralik)
+        {
+            /* Bu fonksiyon verilen zaman aralığını verilen aralik boyutunda (saniye cinsinden) dilimlere böler
+             * Her bir dilimde verilen cihazın dolu olarak geçirdiği zamanı aralik'a bölerek
+             * dilim başı ve sonu ile birlikte bir ZamanAraligiVerisi nesnesine koyar
+             * Tüm dilimlerinkini bir listede toplayarak döndürür
+             */
+
+            DateTime dilimBasi, dilimSonu;
+            double toplam;
+            Model veritabani = new Model();
+            List<ZamanAraligiVerisi> sonuc = new List<ZamanAraligiVerisi>();
+            IQueryable<anatablo> araliktakiTumVeriler = (from veri in veritabani.anatablo
+                                                         where (veri.cihazid == cihazId && DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                                                         && (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0))
+                                                         select veri);
+            //Baslangic ve bitis tarihlerinde giris yapanlar da dahil aralıktaki tüm verileri al
+
+            dilimBasi = baslangic;
+            while (DateTime.Compare(dilimBasi, bitis) < 0)
+            {
+                dilimSonu = dilimBasi.AddSeconds(aralik);
+
+                toplam = 0;
+
+                foreach (var item in (from veri in araliktakiTumVeriler
+                                      where ((DateTime.Compare(dilimBasi, (DateTime)veri.giriszamani) <= 0
+                                             && DateTime.Compare(dilimSonu, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
+                                      || (DateTime.Compare(dilimBasi, (DateTime)veri.cikiszamani) <= 0
+                                             && DateTime.Compare(dilimSonu, (DateTime)veri.cikiszamani) >= 0)//Çıkış zamanı aralığın içinde
+                                      || (DateTime.Compare(dilimBasi, (DateTime)veri.giriszamani) >= 0
+                                             && DateTime.Compare(dilimSonu, (DateTime)veri.cikiszamani) <= 0))//Aralıktan önce girip sonra çıkmış
+                                      select veri))
+                {
+                    if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) < 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                    {
+                        //Dilim Başlangıcından önce girip bitişinden önce çıkmış
+                        toplam += ((DateTime)item.cikiszamani).Subtract(dilimBasi).TotalSeconds;
+                    }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                    {
+                        // Dilimin içinde girip çıkmış
+                        toplam += ((DateTime)item.cikiszamani).Subtract(((DateTime)item.giriszamani)).TotalSeconds;
+                    }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) >= 0)
+                    {
+                        // Dilimin içinde girip, dilim bitişinden sonra çıkmış
+                        toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds;
+                    }
+                    else
+                    {
+                        //Dilim başlangıcından önce girip, dilim sonundan sonra çıkmış
+                        toplam += aralik;
+                    }
+                }
+
+                sonuc.Add(new ZamanAraligiVerisi
+                {
+                    Baslangic = dilimBasi,
+                    Bitis = dilimSonu,
+                    Deger = toplam/aralik
+                });
+
+
+
+
+                dilimBasi = dilimSonu;
+            }
+            return sonuc;
+
+        }
         public static List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut, List<ZamanAraligiVerisi> veriler)
         {
             /*sonBoyut boyutunda bir ZamanAraligiVerisi listesi döndürür
@@ -433,7 +503,7 @@ namespace ParxlabAVM.Helpers
                 formatStringi += formatStringi.Length == 0 ? "mm" : ":mm";
             }
             
-            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.AddMilliseconds(-1).ToString(formatStringi) :
                     dilim.Baslangic.ToString(formatStringi);
 
         }
@@ -474,7 +544,7 @@ namespace ParxlabAVM.Helpers
                 formatStringi += formatStringi.Length == 0 ? "mm" : ":mm";
             }
 
-            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.AddMilliseconds(-1).ToString(formatStringi) :
                     dilim.Baslangic.ToString(formatStringi);
 
         }
@@ -490,7 +560,7 @@ namespace ParxlabAVM.Helpers
              */
             System.Globalization.CultureInfo kultur = new System.Globalization.CultureInfo(dil);
 
-            return ikinciTarihiGoster ? dilim.Baslangic.ToString(isimSekli, kultur) + " - " + dilim.Bitis.ToString(isimSekli, kultur) :
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(isimSekli, kultur) + " - " + dilim.Bitis.AddMilliseconds(-1).ToString(isimSekli, kultur) :
                     dilim.Baslangic.ToString(isimSekli, kultur);
 
         }
