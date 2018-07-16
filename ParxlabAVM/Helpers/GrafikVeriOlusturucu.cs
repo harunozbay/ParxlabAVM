@@ -319,13 +319,13 @@ namespace ParxlabAVM.Helpers
              * Verilen parktaki tüm cihazların sayısına bölünür
              */
             Model veritabani = new Model();
-            double tumCihazlarinSayisi = (from cihaz in veritabani.cihaz where cihaz.parkid == parkId select cihaz).Count();
-            double doluCihazlarinSayisi = (from kayit in veritabani.anatablo
+            IQueryable<anatablo> tumCihazlar = (from anatablo in veritabani.anatablo where anatablo.parkid == parkId select anatablo);
+            double doluCihazlarinSayisi = (from kayit in tumCihazlar
                                            where
                                             (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0
                                             && DateTime.Compare((DateTime)kayit.cikiszamani, an) >= 0)
                                            select kayit).Count();
-            return doluCihazlarinSayisi / tumCihazlarinSayisi;
+            return doluCihazlarinSayisi / tumCihazlar.Count();
         }
 
         public static List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut, List<ZamanAraligiVerisi> veriler)
