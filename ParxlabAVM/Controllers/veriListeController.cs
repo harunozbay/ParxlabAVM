@@ -20,7 +20,7 @@ namespace ParxlabAVM.Controllers
             {
                 kisaltmalar.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(item, true,"ddd", "tr-TR"));
             }*/
-            return View(GrafikVeriOlusturucu.AnlikDolulukOrani(1, new DateTime(2018, 06, 28, 0, 30, 0)));
+            return View(GrafikVeriOlusturucu.AylaraGoreGirenArac(1, new DateTime(2018, 05, 31, 0, 30, 0), new DateTime(2018, 12, 31, 0, 30, 0)));
         }
         public ActionResult Anatablo()
         {
