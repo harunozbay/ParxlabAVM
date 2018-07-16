@@ -8,7 +8,7 @@ namespace ParxlabAVM.Models
     public partial class Model : DbContext
     {
         public Model()
-            : base("name=ModelMsSql")
+            : base("name=NewModel")
         {
         }
 
@@ -93,6 +93,14 @@ namespace ParxlabAVM.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<kullanici>()
+                .Property(e => e.kullaniciadi)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<kullanici>()
+                .Property(e => e.kullanicisoyadi)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<kullanici>()
                 .HasMany(e => e.anatablo)
                 .WithRequired(e => e.kullanici)
                 .WillCascadeOnDelete(false);
@@ -121,7 +129,19 @@ namespace ParxlabAVM.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<yetkili>()
-                .Property(e => e.yetkiliadi)
+                .Property(e => e.adi)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<yetkili>()
+                .Property(e => e.soyadi)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<yetkili>()
+                .Property(e => e.sifre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<yetkili>()
+                .Property(e => e.kullaniciadi)
                 .IsUnicode(false);
 
             modelBuilder.Entity<yetkili>()
