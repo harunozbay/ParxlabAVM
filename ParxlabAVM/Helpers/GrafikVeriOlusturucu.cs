@@ -71,7 +71,7 @@ namespace ParxlabAVM.Helpers
             dilimBasi = baslangic;
             while (DateTime.Compare(dilimBasi, bitis) < 0)
             {
-                dilimSonu = dilimBasi.AddMonths(1);
+                dilimSonu = dilimBasi.AddDays(1).AddMonths(1).AddDays(-1);//Ayın 31'i olması gereken zamanlarda dilimsonu ayın 30'una ayarlanmasın diye
                 sonuc.Add(new ZamanAraligiVerisi
                 {
                     Baslangic = dilimBasi,
@@ -263,7 +263,7 @@ namespace ParxlabAVM.Helpers
             dilimBasi = baslangic;
             while (DateTime.Compare(dilimBasi, bitis) < 0)
             {
-                dilimSonu = dilimBasi.AddMonths(1);
+                dilimSonu = dilimBasi.AddDays(1).AddMonths(1).AddDays(-1);//Ayın 31'i olması gereken zamanlarda dilimsonu ayın 30'una ayarlanmasın diye
                 toplam = 0;
 
                 foreach (var item in (from veri in veritabani.anatablo
@@ -433,7 +433,7 @@ namespace ParxlabAVM.Helpers
                 formatStringi += formatStringi.Length == 0 ? "mm" : ":mm";
             }
             
-            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.AddMilliseconds(-1).ToString(formatStringi) :
                     dilim.Baslangic.ToString(formatStringi);
 
         }
@@ -474,7 +474,7 @@ namespace ParxlabAVM.Helpers
                 formatStringi += formatStringi.Length == 0 ? "mm" : ":mm";
             }
 
-            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.ToString(formatStringi) :
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(formatStringi) + " - " + dilim.Bitis.AddMilliseconds(-1).ToString(formatStringi) :
                     dilim.Baslangic.ToString(formatStringi);
 
         }
@@ -490,7 +490,7 @@ namespace ParxlabAVM.Helpers
              */
             System.Globalization.CultureInfo kultur = new System.Globalization.CultureInfo(dil);
 
-            return ikinciTarihiGoster ? dilim.Baslangic.ToString(isimSekli, kultur) + " - " + dilim.Bitis.ToString(isimSekli, kultur) :
+            return ikinciTarihiGoster ? dilim.Baslangic.ToString(isimSekli, kultur) + " - " + dilim.Bitis.AddMilliseconds(-1).ToString(isimSekli, kultur) :
                     dilim.Baslangic.ToString(isimSekli, kultur);
 
         }
