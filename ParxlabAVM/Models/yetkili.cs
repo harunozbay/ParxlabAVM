@@ -1,5 +1,6 @@
 namespace ParxlabAVM.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -22,10 +23,10 @@ namespace ParxlabAVM.Models
         public int yetkiid { get; set; }
 
         public int yetkiliid { get; set; }
-
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<firma> firma { get; set; }
-
+        [JsonIgnore]
         public virtual yetki yetki { get; set; }
     }
 }
