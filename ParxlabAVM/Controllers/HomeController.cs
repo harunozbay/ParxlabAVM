@@ -21,20 +21,27 @@ namespace ParxlabAVM.Controllers
         {
             /*Random rnd = new Random();
             Model veritabani = new Model();
-            for (int i = 0; i < 11; i++)
+            string[] kullanicilar = { "harun","cihat","önder","burak","özlem","onur","berk","halil","hüseyin" };
+            string[] plakalar = { "14 ASD 06" , "06 IST 34" , "34 DSA 34" , "34 PLT 34" , "05 GS 05" , "10 ON 10",
+                                  "61 LAZ 61" ,"41 ZXC 14"  ,  "01 ADN 100"  };
+            for (int i = 0; i < 20; i++)
             {
 
-                int gun = rnd.Next(18, 24);
-                int saat = rnd.Next(0, 20);
+                int gun = rnd.Next(12, 29);
+                int saat = rnd.Next(0, 10);
                 int saat2 = rnd.Next(saat, 24);
+                int cid = rnd.Next(1, 6);//cihaz id
+                int pid = rnd.Next(1, 20);//park id
+                int fid = rnd.Next(1, 2);//firma id
+                int kisi = rnd.Next(0, 9);//kisi no
                 veritabani.anatablo.Add(new anatablo
                 {
                     
                     parkid = 1,
-                    aracplakasi = "06 ASD 34",
+                    aracplakasi = plakalar[kisi],
                     cihazid = 1,
-                    giriszamani = new DateTime(2018, 06, 24, saat, 15, 0),
-                    cikiszamani = new DateTime(2018, 06, 24, saat2, 35, 0),
+                    giriszamani = new DateTime(2018, 06, gun, saat, 0, 0),
+                    cikiszamani = new DateTime(2018, 06, gun, saat2, 0, 0),
                     kullaniciid = "Ankabeta",
                     firmaid = 1
                 });
@@ -50,28 +57,32 @@ namespace ParxlabAVM.Controllers
             return View(anatablo.ToList());
         }
 
-        //sayfa getirici
+        //grafik sayfası getirici
         [HttpGet]
         public ActionResult GrafikForm()
         {
             return View();
         }
 
-        //veri gönderici
+        //grafik veri gönderici
         [HttpPost]
         public ActionResult GrafikForm(string Giris, string Cikis)
         {
-            GrafikVeriOlusturucu gvo = new GrafikVeriOlusturucu();
+            
             DateTime girisZamani = DateTime.ParseExact(Giris, "dd/MM/yyyy HH:mm",null );
             DateTime cikisZamani = DateTime.ParseExact(Cikis, "dd/MM/yyyy HH:mm", null);
 
-            List<double> arabaSayisi = new List<double>();
-            foreach (var i in gvo.GünlereGöreGirenArac(1, girisZamani, cikisZamani))
+            List<int> arabaSayisi = new List<int>();
+            List<string> etiketler = new List<string>();
+            string[] format = { "dd", "MM" };
+            foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(1, girisZamani, cikisZamani))
             {
-                arabaSayisi.Add(i.Deger);
+                arabaSayisi.Add((int)(i.Deger));
+                etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i,format,false));
 
             }
 
+            ViewBag.Etiketler = etiketler;
             return View("GrafikCiz", arabaSayisi);
         }
 

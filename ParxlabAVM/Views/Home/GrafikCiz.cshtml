@@ -1,4 +1,4 @@
-﻿@model List<double>
+﻿@model List<int>
 @{
     ViewBag.Title = "GrafikCiz";
 }
@@ -19,6 +19,7 @@
 
 <script>
     var result = @Html.Raw(Json.Encode(Model) );
+    var tags=@Html.Raw(Json.Encode(ViewBag.Etiketler) );
     // initialise a new array
     /*var dataPoints = [];
     // build an array of objects
@@ -29,7 +30,7 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Pzt", "Salı", "Çar", "Per", "Cuma", "Cmt","Pzr"],
+            labels: tags,
             datasets: [{
                 label: 'Araba Sayısı',
                 data: result,
@@ -42,7 +43,9 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero:true,
+                        fixedStepSize: 1
+
                     }
                 }]
             },
