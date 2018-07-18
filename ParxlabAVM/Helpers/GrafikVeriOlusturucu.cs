@@ -402,6 +402,7 @@ namespace ParxlabAVM.Helpers
         {
             /*sonBoyut boyutunda bir ZamanAraligiVerisi listesi döndürür
              * Haftanın içinde günlerin, gün içinde saatlerin vs bir zaman aralığında ortalamasını dödürmek için kullanılır
+             * Ay içinde günler için yapılan özel fonksiyon kullanılmalıdır
              * sonuc listesinin her bir indeksi için:
              * veriler listesinde mod(sonBoyut) indeksinde bulunan tüm verilerin değerlerinin ortalamasını
              * ve ilk karşılaşılan indexlerdeki zaman verisini atar
@@ -435,6 +436,45 @@ namespace ParxlabAVM.Helpers
             return sonuc;
         }
         
+        public static List<ZamanAraligiVerisi> AyIcindeOrtalamaBul(List<ZamanAraligiVerisi> veriler)
+        {
+            /* Otuz bir elemanlık bir ZamanAraligiVerisi listesi döndürür
+             * Ay içinde günlerin bir zaman aralığında ortalamasını dödürmek için kullanılır
+             * sonuc listesinin her bir indeksi için:
+             * veriler listesinde ay değeri o indeksin bir fazlasına denk gelen değerlerinin ortalamasını
+             * ve son karşılaşılan indexlerdeki zaman verisini atar
+             * veriler olarak da günlere göre hesap yapan fonksiyonlardan (GünlereGöreGirenArac,GünlereGöreAraclarınHarcadigiToplamZaman)
+             * birinin sonucu kullanılmalıdır
+             * 
+             */
+            int index = 0;
+            List<ZamanAraligiVerisi> sonuc = new List<ZamanAraligiVerisi>(31);
+            int[] tur = new int[31];  //Ortalamayı bulmak için toplam'ı böleceğimiz sayılar
+            int ilkBoyut = veriler.Count();
+
+            for (int i = 0; i < 31; i++)
+            {
+                sonuc.Add(new ZamanAraligiVerisi { Baslangic = new DateTime(), Bitis = new DateTime(), Deger = 0 });
+                tur[i] = 0; //Tüm indexlere sıfır defa sayı eklendi
+
+            }
+            foreach (var gun in veriler)
+            {
+                sonuc[gun.Baslangic.Day - 1].Baslangic = gun.Baslangic;
+                sonuc[gun.Baslangic.Day - 1].Bitis = gun.Bitis;
+                sonuc[gun.Baslangic.Day - 1].Deger += gun.Deger;
+                tur[gun.Baslangic.Day - 1] += 1;
+
+            }
+            while (index < 31 && tur[index] != 0)
+            {
+                sonuc[index].Deger /= tur[index];
+                index++;
+            }
+
+            return sonuc;
+        }
+
         public static string GrafikVeriEtiketiOlustur(ZamanAraligiVerisi dilim, int degisendenOncekilerinSayisi,
                                                 int degisendenSonrkilerinSayisi, bool ikinciTarihiGoster)
         {
