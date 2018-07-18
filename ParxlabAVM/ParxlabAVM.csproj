@@ -210,6 +210,7 @@
     <Content Include="Views\veriListe\AnatabloCihaz.cshtml" />
     <Content Include="Views\veriListe\AylikOrtalama.cshtml" />
     <Content Include="Views\veriListe\Gunluk.cshtml" />
+    <Content Include="Views\veriListe\AnlikDoluluk.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

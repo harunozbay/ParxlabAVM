@@ -20,6 +20,11 @@ namespace ParxlabAVM.Controllers
 
             return View(GrafikVeriOlusturucu.AylaraGoreGirenArac(id, new DateTime(2018, 1, 01, 0, 0, 0), new DateTime(2018, 6, 30, 23, 59, 59)));
         }
+        public ActionResult AnlikDoluluk(int id)
+        {
+
+            return View(GrafikVeriOlusturucu.AnlikDolulukOrani(id));
+        }
         public ActionResult Gunluk(int id)
         {
 

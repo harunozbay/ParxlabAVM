@@ -199,6 +199,11 @@ namespace ParxlabAVM.Helpers
                         // Dilimin içinde girip, dilim bitişinden sonra çıkmış
                         toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
                     }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && item.cikiszamani == null)
+                    {
+                        //Dilimin içinde girip henüz çıkmamış
+                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                    }
                     else
                     {
                         //Dilim başlangıcından önce girip, dilim sonundan sonra çıkmış
@@ -290,6 +295,11 @@ namespace ParxlabAVM.Helpers
                         // Dilimin içinde girip, dilim bitişinden sonra çıkmış
                         toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
                     }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && item.cikiszamani == null)
+                    {
+                        //Dilimin içinde girip henüz çıkmamış
+                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                    }
                     else
                     {
                         //Dilim başlangıcından önce girip, dilim sonundan sonra çıkmış
@@ -311,19 +321,12 @@ namespace ParxlabAVM.Helpers
         }
 
 
-        public static double AnlikDolulukOrani(int parkId,DateTime an)
+        public static double AnlikDolulukOrani(int parkId)
         {
-            /* Bu fonksiyon verilen bir anda (saniyeye kadar çözünürlükle) verilen bir parktaki cihazların doluluk oranını verir
-             * Tüm anatablolarda giriş zamanı verilen andan önce çıkış zamanı ise sonra olanlar sayılır
-             * Verilen parktaki tüm cihazların sayısına bölünür
-             */
             Model veritabani = new Model();
-            IQueryable<anatablo> tumCihazlar = (from anatablo in veritabani.anatablo where anatablo.parkid == parkId select anatablo);
-            double doluCihazlarinSayisi = (from kayit in tumCihazlar
-                                           where
-                                            (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0
-                                            && DateTime.Compare((DateTime)kayit.cikiszamani, an) >= 0)
-                                           select kayit).Count();
+            IQueryable<cihaz> tumCihazlar = (from cihaz in veritabani.cihaz where cihaz.parkid == parkId select cihaz);
+            double doluCihazlarinSayisi = (from cihaz in tumCihazlar where cihaz.cihazdurumu == 1 select cihaz).Count();
+
             return doluCihazlarinSayisi / tumCihazlar.Count();
         }
 
@@ -375,6 +378,11 @@ namespace ParxlabAVM.Helpers
                     {
                         // Dilimin içinde girip, dilim bitişinden sonra çıkmış
                         toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds;
+                    }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && item.cikiszamani == null)
+                    {
+                        //Dilimin içinde girip henüz çıkmamış
+                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds;
                     }
                     else
                     {
