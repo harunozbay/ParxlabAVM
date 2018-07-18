@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "GrafikForm";
+}
+<h2>İstatistik</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        
+        <div class='col-md-5'>
+            
+                <label for="birinci">Bu tarihten </label>
+                <div class="form-group" id="birinci">
+
+
+                    <div class="input-group date" id='datetimepicker6'>
+
+                        <input type='text' class="form-control" name="Giris" />
+                        <span class="input-group-addon ">
+
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                </div>
+            
+        </div>
+        
+        
+        <div class='col-md-5'>
+            <label for="birinci">Bu tarihe </label>
+            <div class="form-group" id="ikinci">
+                
+                <div class='input-group date' id='datetimepicker7'>
+                    
+                    <input type='text' name="Cikis" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-5'>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Sorgula</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(
+            $(function () {
+                $('#datetimepicker6').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm'
+                });
+                $('#datetimepicker7').datetimepicker({
+                    useCurrent: false, //Important! See issue #1075
+                    format: 'DD/MM/YYYY HH:mm'
+                });
+                $("#datetimepicker6").on("dp.change", function (e) {
+                    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker7").on("dp.change", function (e) {
+                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                });
+            }));
+
+    </script>
+}
+
+
