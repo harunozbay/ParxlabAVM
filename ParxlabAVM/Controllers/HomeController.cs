@@ -19,42 +19,40 @@ namespace ParxlabAVM.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            /*Random rnd = new Random();
-            Model veritabani = new Model();
-            string[] kullanicilar = { "harun","cihat","önder","burak","özlem","onur","berk","halil","hüseyin" };
-            string[] plakalar = { "14 ASD 06" , "06 IST 34" , "34 DSA 34" , "34 PLT 34" , "05 GS 05" , "10 ON 10",
-                                  "61 LAZ 61" ,"41 ZXC 14"  ,  "01 ADN 100"  };
-            for (int i = 0; i < 20; i++)
+            /*Model veritabani = new Model();
+
+            veritabani.anatablo.Add(new anatablo
             {
-
-                int gun = rnd.Next(12, 29);
-                int saat = rnd.Next(0, 10);
-                int saat2 = rnd.Next(saat, 24);
-                int cid = rnd.Next(1, 6);//cihaz id
-                int pid = rnd.Next(1, 20);//park id
-                int fid = rnd.Next(1, 2);//firma id
-                int kisi = rnd.Next(0, 9);//kisi no
-                veritabani.anatablo.Add(new anatablo
-                {
-                    
-                    parkid = 1,
-                    aracplakasi = plakalar[kisi],
-                    cihazid = 1,
-                    giriszamani = new DateTime(2018, 06, gun, saat, 0, 0),
-                    cikiszamani = new DateTime(2018, 06, gun, saat2, 0, 0),
-                    kullaniciid = "Ankabeta",
-                    firmaid = 1
-                });
-
-                
-            }
+                parkid = 1,
+                aracplakasi = "14 ZXC 34",
+                cihazid = 5,
+                giriszamani = new DateTime(2018, 07, 19, 6, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
 
             veritabani.SaveChanges();*/
 
-           
+            DateTime simdi = DateTime.Now;
+            DateTime gununBaslangici = DateTime.Today;
+            int gecenSaniye = (int)simdi.Subtract(gununBaslangici).TotalSeconds;
 
-            var anatablo = db.anatablo.Include(a => a.cihaz).Include(a => a.firma).Include(a => a.kullanici).Include(a => a.parkyeri).OrderBy(a => a.giriszamani);
-            return View(anatablo.ToList());
+            int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
+            double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
+            double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1, simdi);
+
+
+            ViewBag.bugunkuAracSayisi = bugunkuAracSayisi;
+            ViewBag.toplamParkSuresi = toplamParkSuresi;
+            ViewBag.anlikDoluluk = anlikDoluluk;
+            
+            return View();
+
+
+
+
+
         }
 
         //grafik sayfası getirici
@@ -64,12 +62,13 @@ namespace ParxlabAVM.Controllers
             return View();
         }
 
+
         //grafik veri gönderici
         [HttpPost]
         public ActionResult GrafikForm(string Giris, string Cikis)
         {
-            
-            DateTime girisZamani = DateTime.ParseExact(Giris, "dd/MM/yyyy HH:mm",null );
+
+            DateTime girisZamani = DateTime.ParseExact(Giris, "dd/MM/yyyy HH:mm", null);
             DateTime cikisZamani = DateTime.ParseExact(Cikis, "dd/MM/yyyy HH:mm", null);
 
             List<int> arabaSayisi = new List<int>();
@@ -78,7 +77,7 @@ namespace ParxlabAVM.Controllers
             foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(1, girisZamani, cikisZamani))
             {
                 arabaSayisi.Add((int)(i.Deger));
-                etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i,format,false));
+                etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i, format, false));
 
             }
 
@@ -205,5 +204,10 @@ namespace ParxlabAVM.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+
+
     }
 }
