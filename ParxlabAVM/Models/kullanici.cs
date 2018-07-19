@@ -5,6 +5,7 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("kullanici")]
     public partial class kullanici
@@ -30,7 +31,7 @@ namespace ParxlabAVM.Models
 
         [Column(TypeName = "date")]
         public DateTime? kullanicidogumtarihi { get; set; }
-
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<anatablo> anatablo { get; set; }
     }
