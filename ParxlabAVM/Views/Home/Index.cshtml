@@ -14,9 +14,9 @@
                 <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                     <i class="ion ion-earth tx-60 lh-0 tx-white op-7"></i>
                     <div class="mg-l-20">
-                        <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Şimdiye Kadar Giren Araç Sayısı</p>
+                        <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Bugünkü Araç Sayısı</p>
                         <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@ViewBag.bugunkuAracSayisi</p>
-                        <span class="tx-11 tx-roboto tx-white-8">Dünden %10 daha fazla </span>
+                        <span class="tx-11 tx-roboto tx-white-8">Dünden %"yapılmadı" daha fazla </span>
                     </div>
                 </div>
                 <div id="ch1" class="ht-50 tr-y-1"></div>
@@ -29,7 +29,7 @@
                     <div class="mg-l-20">
                         <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Toplam Park Süresi</p>
                         <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@ViewBag.toplamParkSuresi</p>
-                        <span class="tx-11 tx-roboto tx-white-8">Dünden %4 daha fazla</span>
+                        <span class="tx-11 tx-roboto tx-white-8">Dünden %"yapılmadı" daha fazla</span>
                     </div>
                 </div>
                 <div id="ch3" class="ht-50 tr-y-1"></div>
@@ -42,7 +42,7 @@
                     <div class="mg-l-20">
                         <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Ortalama Park Süresi</p>
                         <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">1 saat 12 dk</p>
-                        <span class="tx-11 tx-roboto tx-white-8">Dünden %2 daha fazla </span>
+                        <span class="tx-11 tx-roboto tx-white-8">Dünden %"yapılmadı" daha fazla </span>
                     </div>
                 </div>
                 <div id="ch2" class="ht-50 tr-y-1"></div>
@@ -54,8 +54,8 @@
                     <i class="ion ion-clock tx-60 lh-0 tx-white op-7"></i>
                     <div class="mg-l-20">
                         <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Anlık Doluluk Oranı</p>
-                        <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">%32</p>
-                        <span class="tx-11 tx-roboto tx-white-8">Ortalama %29</span>
+                        <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">%@ViewBag.anlikDoluluk</p>
+                        <span class="tx-11 tx-roboto tx-white-8">Ortalama %"yapılmadı"</span>
                     </div>
                 </div>
                 <div id="ch4" class="ht-50 tr-y-1"></div>

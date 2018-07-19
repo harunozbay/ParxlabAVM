@@ -24,11 +24,10 @@ namespace ParxlabAVM.Controllers
             veritabani.anatablo.Add(new anatablo
             {
                 parkid = 1,
-                aracplakasi = "14 ASD 34",
+                aracplakasi = "14 ZXC 34",
                 cihazid = 5,
-                giriszamani = new DateTime(2018, 07, 18, 10, 55, 0)
-                //cikiszamani = new DateTime(2018, 07, 18, , 35, 0)
-                ,
+                giriszamani = new DateTime(2018, 07, 19, 6, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
                 kullaniciid = "Ankabeta",
                 firmaid = 1
             });
@@ -40,12 +39,12 @@ namespace ParxlabAVM.Controllers
             int gecenSaniye = (int)simdi.Subtract(gununBaslangici).TotalSeconds;
 
             int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            //int toplamParkSuresi = (int)GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
+            double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
             double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1, simdi);
 
 
             ViewBag.bugunkuAracSayisi = bugunkuAracSayisi;
-            //ViewBag.toplamParkSuresi = toplamParkSuresi;
+            ViewBag.toplamParkSuresi = toplamParkSuresi;
             ViewBag.anlikDoluluk = anlikDoluluk;
             
             return View();
