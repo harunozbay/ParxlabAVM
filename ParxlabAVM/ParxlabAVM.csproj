@@ -159,6 +159,11 @@
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="Views\veriListe\Anatablo.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\anatablo\Create.cshtml" />
+    <Content Include="Views\anatablo\Delete.cshtml" />
+    <Content Include="Views\anatablo\Details.cshtml" />
+    <Content Include="Views\anatablo\Edit.cshtml" />
+    <Content Include="Views\anatablo\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -168,11 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-
     <Compile Include="App_Start\WebApiConfig.cs" />
-
+    <Compile Include="Controllers\anatabloController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-
     <Compile Include="Controllers\veriListeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

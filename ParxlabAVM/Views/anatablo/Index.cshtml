@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ParxlabAVM.Models.anatablo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cihaz.cihazid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.firma.firmaadi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kullanici.sifre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.parkyeri.parkadi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.giriszamani)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cikiszamani)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aracplakasi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cihaz.cihazid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.firma.firmaadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanici.sifre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.parkyeri.parkadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.giriszamani)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cikiszamani)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aracplakasi)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.anatabloid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.anatabloid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.anatabloid })
+        </td>
+    </tr>
+}
+
+</table>
