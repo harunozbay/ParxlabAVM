@@ -1,0 +1,40 @@
+﻿@using ParxlabAVM.Helpers
+@model List<ZamanAraligiVerisi>
+
+
+@{
+    ViewBag.Title = "Aylık Ortalama";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Başlangıç
+        </th>
+        <th>
+            Bitiş
+        </th>
+        <th>
+            Değer
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslangic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bitis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deger)
+            </td>
+        </tr>
+    }
+
+</table>

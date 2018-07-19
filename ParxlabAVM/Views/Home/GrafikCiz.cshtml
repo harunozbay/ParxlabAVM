@@ -1,0 +1,55 @@
+﻿@model List<int>
+@{
+    ViewBag.Title = "GrafikCiz";
+}
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+<div class="chartjs-wrapper">
+    <h2>İstatistik </h2>
+
+    <canvas id="myChart" width="500" height="500"></canvas>
+
+</div>
+
+<script>
+    var result = @Html.Raw(Json.Encode(Model) );
+    var tags=@Html.Raw(Json.Encode(ViewBag.Etiketler) );
+    // initialise a new array
+    /*var dataPoints = [];
+    // build an array of objects
+    for(var i = 0; i < result.length; i++){
+        dataPoints.push(result[i]);
+    }*/
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: tags,
+            datasets: [{
+                label: 'Araba Sayısı',
+                data: result,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        fixedStepSize: 1
+
+                    }
+                }]
+            },
+            responsive: false
+        }
+    });
+</script>
