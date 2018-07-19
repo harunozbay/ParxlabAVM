@@ -19,33 +19,39 @@ namespace ParxlabAVM.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            /*Model veritabani = new Model();
+           /* Model veritabani = new Model();
 
             veritabani.anatablo.Add(new anatablo
             {
                 parkid = 1,
-                aracplakasi = "14 ZXC 34",
-                cihazid = 5,
-                giriszamani = new DateTime(2018, 07, 19, 6, 00, 0),
-                cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+                aracplakasi = "Harun",
+                cihazid = 3,
+                giriszamani = new DateTime(2018, 07, 19, 13, 00, 0),
+                //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
                 kullaniciid = "Ankabeta",
                 firmaid = 1
             });
 
+            (from veri in veritabani.cihaz where veri.cihazid == 3 select veri).FirstOrDefault().cihazdurumu=1;
             veritabani.SaveChanges();*/
 
             DateTime simdi = DateTime.Now;
+            DateTime dunBuSular = simdi.AddDays(-1);
             DateTime gununBaslangici = DateTime.Today;
+            DateTime dununBaslangici = gununBaslangici.AddDays(-1);
             int gecenSaniye = (int)simdi.Subtract(gununBaslangici).TotalSeconds;
 
             int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
+            //dünkü araç sayısı
             double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1, simdi);
-
+            //dünkü toplamParkSuresi
+            double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1) * 100;
+            //dünkü anlikDoluluk
 
             ViewBag.bugunkuAracSayisi = bugunkuAracSayisi;
-            ViewBag.toplamParkSuresi = toplamParkSuresi;
-            ViewBag.anlikDoluluk = anlikDoluluk;
+            ViewBag.toplamParkSuresi = toplamParkSuresi.ToString("#.##");
+            ViewBag.ortalamaParkSuresi = (toplamParkSuresi / bugunkuAracSayisi).ToString("#.##");
+            ViewBag.anlikDoluluk = anlikDoluluk.ToString("#.##");
             
             return View();
 

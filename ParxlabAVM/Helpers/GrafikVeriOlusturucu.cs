@@ -184,7 +184,12 @@ namespace ParxlabAVM.Helpers
                                              && DateTime.Compare(dilimSonu, (DateTime)veri.cikiszamani) <= 0))//Aralıktan önce girip sonra çıkmış
                                       select veri))
                 {
-                    if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) < 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                    if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && item.cikiszamani == null)
+                    {
+                        //Dilimin içinde girip henüz çıkmamış
+                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                    }
+                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) < 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
                     {
                         //Dilim Başlangıcından önce girip bitişinden önce çıkmış
                         toplam += ((DateTime)item.cikiszamani).Subtract(dilimBasi).TotalSeconds / 3600.0;
@@ -199,11 +204,7 @@ namespace ParxlabAVM.Helpers
                         // Dilimin içinde girip, dilim bitişinden sonra çıkmış
                         toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
                     }
-                    else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && item.cikiszamani == null)
-                    {
-                        //Dilimin içinde girip henüz çıkmamış
-                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
-                    }
+                    
                     else
                     {
                         //Dilim başlangıcından önce girip, dilim sonundan sonra çıkmış
