@@ -194,6 +194,7 @@
     <Compile Include="Models\yetkili.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\cihazlarController.cs" />
+    <Compile Include="Services\IdEskiYeniSifre.cs" />
     <Compile Include="Services\IdSifreIkilisi.cs" />
     <Compile Include="Services\ilcelerController.cs" />
     <Compile Include="Services\kullanicilarController.cs" />

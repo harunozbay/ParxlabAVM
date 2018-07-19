@@ -79,6 +79,28 @@ namespace ParxlabAVM.Services
 
         [ResponseType(typeof(kullanici))]
         [HttpPost]
+        public IHttpActionResult SifreDegistir(IdEskiYeniSifre kullanici)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            kullanici bulunan = (from veri in db.kullanici
+                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.eskiSifre
+                                 select veri).FirstOrDefault();
+
+            if (bulunan == null)
+            {
+                return NotFound();
+            }
+            bulunan.sifre = kullanici.yeniSifre;
+            db.SaveChanges();
+            return Ok(bulunan);
+        }
+
+        [ResponseType(typeof(kullanici))]
+        [HttpPost]
         public IHttpActionResult KullaniciEkle(kullanici kullanici)
         {
             if (!ModelState.IsValid)
