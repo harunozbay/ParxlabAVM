@@ -16,16 +16,17 @@ namespace ParxlabAVM.Services
     {
         private Model db = new Model();
 
-        // GET: api/ilceler
         [HttpGet]
-        public IQueryable<ilce> ilceler()
+        // GET: api/ilceler
+        public IQueryable<ilce> ilce()
         {
             return db.ilce;
         }
 
+        [HttpGet]
         // GET: api/ilceler/5
         [ResponseType(typeof(ilce))]
-        public IHttpActionResult Getilce(int id)
+        public IHttpActionResult ilce(int id)
         {
             ilce ilce = db.ilce.Find(id);
             if (ilce == null)
