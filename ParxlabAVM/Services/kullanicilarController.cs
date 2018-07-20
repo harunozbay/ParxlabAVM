@@ -113,6 +113,8 @@ namespace ParxlabAVM.Services
 
             if (bulunan == null)
             {
+                db.kullanici.Add(kullanici);
+                db.SaveChanges();
                 return Ok();// 200 Ok
             }
             return Conflict();//409 Conflict
