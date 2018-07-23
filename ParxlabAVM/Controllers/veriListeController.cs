@@ -15,6 +15,17 @@ namespace ParxlabAVM.Controllers
         {
             return View(GrafikVeriOlusturucu.AylaraGoreGirenArac(1, new DateTime(2016, 12, 01, 0, 30, 0), new DateTime(2018, 12, 31, 0, 30, 0)));
         }
+
+        public ActionResult Double()
+        {
+            return View(new ZamanAraligiVerisi {
+                Baslangic = new DateTime(2018, 7, 19, 0, 0, 0),
+                Bitis = new DateTime(2018, 7, 19, 20, 10, 0),
+                Deger = GrafikVeriOlusturucu.listedekilerinHarcadigiToplamZaman
+                (GrafikVeriOlusturucu.dilimdeBulunmusAraclar(2, 'c', new DateTime(2018, 7, 19, 0, 0, 0), new DateTime(2018, 7, 19, 20, 10, 0))
+                , new DateTime(2018, 7, 19, 0, 0, 0), new DateTime(2018, 7, 19, 20, 10, 0))
+            });
+        }
         public ActionResult Aylik(int id)
         {
 

@@ -9,6 +9,128 @@ namespace ParxlabAVM.Helpers
     public static class GrafikVeriOlusturucu
     {
 
+        public static IQueryable<anatablo> dilimdeGirmisAraclar(int id, char anahtar, DateTime baslangic, DateTime bitis)
+        {
+            Model veritabani = new Model();
+            if (anahtar == 'c')
+            {
+                return (from veri in veritabani.anatablo
+                        where (veri.cihazid == id && DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                        && (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0))
+                        select veri);
+            }
+            else if (anahtar == 'p')
+            {
+                return (from veri in veritabani.anatablo
+                        where (veri.parkid == id && DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                        && (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0))
+                        select veri);
+            }
+            else if (anahtar == 'f')
+            {
+                return (from veri in veritabani.anatablo
+                        where (veri.firmaid == id && DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                        && (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0))
+                        select veri);
+            }
+            return null;
+
+        }
+
+        public static IQueryable<anatablo> dilimdeBulunmusAraclar(int id, char anahtar, DateTime baslangic, DateTime bitis)
+        {
+            Model veritabani = new Model();
+            if (anahtar == 'c')
+            {
+                return (from veri in veritabani.anatablo
+                        where (veri.cihazid == id && (
+                        (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0
+                               && veri.cikiszamani == null)  //Aralıkta veya ondan daha önce girmiş ama henüz çıkmamış
+                        || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
+                        || (DateTime.Compare(baslangic, (DateTime)veri.cikiszamani) <= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) >= 0)//çıkış zamanı aralığın içinde
+                        || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) >= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) <= 0)))//Aralıktan önce girip sonra çıkmış
+                        select veri);
+            }
+            else if (anahtar == 'p')
+            {
+                return (from veri in veritabani.anatablo
+                        where (veri.parkid == id && (
+                        (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0
+                               && veri.cikiszamani == null)  //Aralıkta veya ondan daha önce girmiş ama henüz çıkmamış
+                        || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
+                        || (DateTime.Compare(baslangic, (DateTime)veri.cikiszamani) <= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) >= 0)//çıkış zamanı aralığın içinde
+                        || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) >= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) <= 0)))//Aralıktan önce girip sonra çıkmış
+                        select veri);
+            }
+            else if (anahtar == 'f')
+            {
+                return (from veri in veritabani.anatablo
+                        where (veri.firmaid == id && (
+                        (DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0
+                               && veri.cikiszamani == null)  //Aralıkta veya ondan daha önce girmiş ama henüz çıkmamış
+                        || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) <= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.giriszamani) >= 0)//Giriş zamanı aralığın içinde
+                        || (DateTime.Compare(baslangic, (DateTime)veri.cikiszamani) <= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) >= 0)//çıkış zamanı aralığın içinde
+                        || (DateTime.Compare(baslangic, (DateTime)veri.giriszamani) >= 0
+                               && DateTime.Compare(bitis, (DateTime)veri.cikiszamani) <= 0)))//Aralıktan önce girip sonra çıkmış
+                        select veri);
+            }
+            return null;
+        }
+
+        public static double listedekilerinHarcadigiToplamZaman(IQueryable<anatablo> liste, DateTime dilimBasi, DateTime dilimSonu)
+        {
+            //Saat cinsinden
+            double toplam = 0;
+            double aralik = dilimSonu.Subtract(dilimBasi).TotalSeconds;
+            foreach (var item in liste)
+            {
+                if (item.cikiszamani == null)
+                {
+                    if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 )
+                    {
+                        //Dilimin içinde girip henüz çıkmamış
+                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                    }
+                    else
+                    {
+                        //Dilim başlangıcından önce girip henüz çıkmamış
+                        toplam += aralik / 3600.0;
+                    }
+                        
+                }
+                else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) < 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                {
+                    //Dilim Başlangıcından önce girip bitişinden önce çıkmış
+                    toplam += ((DateTime)item.cikiszamani).Subtract(dilimBasi).TotalSeconds / 3600.0;
+                }
+                else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) < 0)
+                {
+                    // Dilimin içinde girip çıkmış
+                    toplam += ((DateTime)item.cikiszamani).Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                }
+                else if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 && DateTime.Compare((DateTime)item.cikiszamani, dilimSonu) >= 0)
+                {
+                    // Dilimin içinde girip dilim bitişinden sonra çıkmış
+                    toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                }
+
+                else
+                {
+                    //Dilim başlangıcından önce girip dilim sonundan sonra çıkmış 
+                    toplam += aralik / 3600.0;
+                }
+            }
+            return toplam;
+        }
+
         public static List<ZamanAraligiVerisi> ZamanDilimindeGirenArac(int parkId, DateTime baslangic, DateTime bitis, int aralik)
         {
             /*
