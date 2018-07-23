@@ -12,6 +12,7 @@ using ParxlabAVM.Models;
 
 namespace ParxlabAVM.Services
 {
+    [RoutePrefix("api/kullanicilar")]
     public class kullanicilarController : ApiController
     {
         private Model db = new Model();
@@ -57,6 +58,7 @@ namespace ParxlabAVM.Services
         }
 
         // POST: api/kullanicilar
+        [Route("KullaniciDogrula")]
         [ResponseType(typeof(kullanici))]
         [HttpPost]
         public IHttpActionResult KullaniciDogrula(IdSifreIkilisi kullanici)
@@ -77,6 +79,7 @@ namespace ParxlabAVM.Services
             return Ok(bulunan);
         }
 
+        [Route("SifreDegistir")]
         [ResponseType(typeof(kullanici))]
         [HttpPost]
         public IHttpActionResult SifreDegistir(IdEskiYeniSifre kullanici)
@@ -101,6 +104,7 @@ namespace ParxlabAVM.Services
 
         [ResponseType(typeof(kullanici))]
         [HttpPost]
+        [Route("KullaniciEkle")]
         public IHttpActionResult KullaniciEkle(kullanici kullanici)
         {
             if (!ModelState.IsValid)
@@ -113,6 +117,8 @@ namespace ParxlabAVM.Services
 
             if (bulunan == null)
             {
+                db.kullanici.Add(kullanici);
+                db.SaveChanges();
                 return Ok();// 200 Ok
             }
             return Conflict();//409 Conflict

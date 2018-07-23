@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ParxlabAVM.Models.cihaz>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.parkyeri.parkadi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cihazdurumu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.enlem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.boylam)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.parkyeri.parkadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cihazdurumu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.enlem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.boylam)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.cihazid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.cihazid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.cihazid })
+        </td>
+    </tr>
+}
+
+</table>
