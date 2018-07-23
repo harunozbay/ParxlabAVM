@@ -40,6 +40,13 @@
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="../../BracketDashboard/css/bracket.css">
+
+    <style type="text/css">
+        #map {
+            width: 100%;
+            
+        }
+    </style>
 </head>
 
 <body>
@@ -246,8 +253,7 @@
         <br>
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->
-   
-     <!-- ########## START: HEAD PANEL ########## -->
+    <!-- ########## START: HEAD PANEL ########## -->
     <div class="br-header">
         <div class="br-header-left">
             <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href=""><i class="icon ion-navicon-round"></i></a></div>
@@ -430,7 +436,6 @@
         </div><!-- br-header-right -->
     </div><!-- br-header -->
     <!-- ########## END: HEAD PANEL ########## -->
-    
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="br-mainpanel">
         <div class="br-pagetitle">
@@ -443,10 +448,11 @@
         <div class="br-pagebody">
             @RenderBody()
         </div><!-- br-pagebody -->
+
     </div><!-- br-mainpanel -->
     <!-- ########## END: MAIN PANEL ########## -->
-    
-    
+
+
     <script src="../../BracketDashboard/lib/jquery/jquery.js"></script>
     <script src="../../BracketDashboard/lib/popper.js/popper.js"></script>
     <script src="../../BracketDashboard/lib/bootstrap/js/bootstrap.js"></script>
@@ -465,9 +471,29 @@
     <script src="../../BracketDashboard/lib/select2/js/select2.full.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyCuWEQWfVkWfcUoSIZeGw5JioT9LVCwYkE"></script>
     <script src="../../BracketDashboard/lib/gmaps/gmaps.js"></script>
+    @*<script src="../../BracketDashboard/js/map.shiftworker.js"></script>*@
+    <script>
+        var map = new GMaps({
+            el: '#map',
+            lat: 39.950330, 
+            lng: 32.832764,
+            zoom:18
+        });
+
+        var path = [[39.950897, 32.832265], [39.950895, 32.833244], [39.949661, 32.833252], [39.949667, 32.832276]];
+
+        polygon = map.drawPolygon({
+            paths: path, // pre-defined polygon shape
+            strokeColor: '#BBD8E9',
+            strokeOpacity: 1,
+            strokeWeight: 3,
+            fillColor: '#BBD8E9',
+            fillOpacity: 0.6
+        });
+    </script>
 
     <script src="../../BracketDashboard/js/bracket.js"></script>
-    <script src="../../BracketDashboard/js/map.shiftworker.js"></script>
+
     <script src="../../BracketDashboard/js/ResizeSensor.js"></script>
     <script src="../../BracketDashboard/js/dashboard.js"></script>
     <script>

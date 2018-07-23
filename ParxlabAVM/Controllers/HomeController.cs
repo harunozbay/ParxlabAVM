@@ -19,20 +19,102 @@ namespace ParxlabAVM.Controllers
         // GET: Home
         public ActionResult Index()
         {
-           /* Model veritabani = new Model();
+           /*Model veritabani = new Model();
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 2,
+                giriszamani = new DateTime(2018, 07, 18, 9, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 18, 11, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 1,
+                giriszamani = new DateTime(2018, 07, 18, 10, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 18, 13, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 2,
+                giriszamani = new DateTime(2018, 07, 18, 14, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 18, 20, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
 
             veritabani.anatablo.Add(new anatablo
             {
                 parkid = 1,
                 aracplakasi = "Harun",
                 cihazid = 3,
-                giriszamani = new DateTime(2018, 07, 19, 13, 00, 0),
+                giriszamani = new DateTime(2018, 07, 19, 8, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 19, 15, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 2,
+                giriszamani = new DateTime(2018, 07, 19, 10, 00, 0),
+                cikiszamani = new DateTime(2018, 07, 19, 15, 00, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 5,
+                giriszamani = new DateTime(2018, 07, 19, 15, 00, 0),
                 //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
                 kullaniciid = "Ankabeta",
                 firmaid = 1
             });
 
-            (from veri in veritabani.cihaz where veri.cihazid == 3 select veri).FirstOrDefault().cihazdurumu=1;
+
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 6,
+                giriszamani = new DateTime(2018, 07, 19, 16, 00, 0),
+                //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
+
+            veritabani.anatablo.Add(new anatablo
+            {
+                parkid = 1,
+                aracplakasi = "Harun",
+                cihazid = 2,
+                giriszamani = new DateTime(2018, 07, 19, 16, 10, 0),
+                //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+                kullaniciid = "Ankabeta",
+                firmaid = 1
+            });
+
+            //(from veri in veritabani.cihaz where veri.cihazid == 2 select veri).FirstOrDefault().cihazdurumu=1;
             veritabani.SaveChanges();*/
 
             DateTime simdi = DateTime.Now;
@@ -42,17 +124,24 @@ namespace ParxlabAVM.Controllers
             int gecenSaniye = (int)simdi.Subtract(gununBaslangici).TotalSeconds;
 
             int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            //dünkü araç sayısı
+            int dunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, dununBaslangici, dunBuSular, gecenSaniye)[0].Deger;
             double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            //dünkü toplamParkSuresi
-            double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1) * 100;
-            //dünkü anlikDoluluk
+            double dunkuToplamParkSuresi= GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, dununBaslangici, dunBuSular, gecenSaniye)[0].Deger;
+            double anlikDoluluk = GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(1,simdi) * 100;//normal şartlarda cihaz id kontrol edilir,burada anatablo(kolaylık olsun diye)
+            double dunkuAnlikDoluluk = GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(1,dunBuSular) * 100;
 
             ViewBag.bugunkuAracSayisi = bugunkuAracSayisi;
+            ViewBag.dunkuAracSayisi = dunkuAracSayisi;
+
             ViewBag.toplamParkSuresi = toplamParkSuresi.ToString("#.##");
+            ViewBag.dunkuToplamParkSuresi = dunkuToplamParkSuresi.ToString("#.##");
+
             ViewBag.ortalamaParkSuresi = (toplamParkSuresi / bugunkuAracSayisi).ToString("#.##");
+            ViewBag.dunkuOrtalamaParkSuresi = (dunkuToplamParkSuresi / dunkuAracSayisi).ToString("#.##");
+
             ViewBag.anlikDoluluk = anlikDoluluk.ToString("#.##");
-            
+            ViewBag.dunkuAnlikDoluluk = dunkuAnlikDoluluk.ToString("#.##");
+
             return View();
 
 
