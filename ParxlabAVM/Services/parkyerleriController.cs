@@ -12,33 +12,30 @@ using ParxlabAVM.Models;
 
 namespace ParxlabAVM.Services
 {
-    public class ilcelerController : ApiController
+    public class parkyerleriController : ApiController
     {
         private Model db = new Model();
 
         [HttpGet]
-        // GET: api/ilceler
-        public IQueryable<ilce> ilceler()
+        // GET: api/parkyerleri
+        public IQueryable<parkyeri> parkyerleri()
         {
-            return db.ilce;
+            return db.parkyeri;
         }
 
         [HttpGet]
-        // GET: api/ilceler/5
-        [ResponseType(typeof(IQueryable<ilce>))]
-        public IHttpActionResult ilceler(int id)
+        // GET: api/parkyerleri/5
+        [ResponseType(typeof(IQueryable<parkyeri>))]
+        public IHttpActionResult parkyerleri(int id)
         {
-            IQueryable<ilce> ilceler = from ilce in db.ilce where ilce.ilid == id select ilce;
-            if (ilceler == null)
+            IQueryable<parkyeri> parkyeri = (from veri in db.parkyeri where veri.firmaid == id select veri);
+            if (parkyeri == null)
             {
                 return NotFound();
             }
 
-            return Ok(ilceler);
+            return Ok(parkyeri);
         }
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -48,9 +45,9 @@ namespace ParxlabAVM.Services
             base.Dispose(disposing);
         }
 
-        private bool ilceExists(int id)
+        private bool parkyeriExists(int id)
         {
-            return db.ilce.Count(e => e.ilceid == id) > 0;
+            return db.parkyeri.Count(e => e.parkid == id) > 0;
         }
     }
 }
