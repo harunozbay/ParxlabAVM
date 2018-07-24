@@ -894,17 +894,24 @@
     <Compile Include="Identity\ApplicationRole.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Identity\IdentityDataContext.cs" />
+    <Compile Include="Migrations\201807241222418_2ndMigration.cs" />
+    <Compile Include="Migrations\201807241222418_2ndMigration.Designer.cs">
+      <DependentUpon>201807241222418_2ndMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\anatablo.cs" />
+    <Compile Include="Models\AspNetRoles.cs" />
+    <Compile Include="Models\AspNetUserClaims.cs" />
+    <Compile Include="Models\AspNetUserLogins.cs" />
+    <Compile Include="Models\AspNetUsers.cs" />
     <Compile Include="Models\cihaz.cs" />
+    <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\firma.cs" />
     <Compile Include="Models\il.cs" />
     <Compile Include="Models\ilce.cs" />
-    <Compile Include="Models\kullanici.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\parkyeri.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Models\yetki.cs" />
-    <Compile Include="Models\yetkili.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -945,6 +952,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807241222418_2ndMigration.resx">
+      <DependentUpon>201807241222418_2ndMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

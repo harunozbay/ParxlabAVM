@@ -17,59 +17,26 @@ namespace ParxlabAVM.Services
     {
         private Model db = new Model();
 
-        public IQueryable<kullanici> Getkullanici()
+        public IQueryable<AspNetUsers> Getkullanici()
         {
-            return db.kullanici;
+            return db.AspNetUsers;
         }
 
-        // PUT: api/kullanicilar/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putkullanici(string id, kullanici kullanici)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != kullanici.kullaniciid)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(kullanici).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!kullaniciExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
 
         // POST: api/kullanicilar
         [Route("KullaniciDogrula")]
-        [ResponseType(typeof(kullanici))]
+        [ResponseType(typeof(AspNetUsers))]
         [HttpPost]
-        public IHttpActionResult KullaniciDogrula(IdSifreIkilisi kullanici)
+        public IHttpActionResult KullaniciDogrula(IdSifreIkilisi verilen)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.sifre
+            AspNetUsers bulunan = (from veri in db.AspNetUsers
+                                 where veri.UserName == @verilen.kullaniciid && veri.PasswordHash == verilen.sifre
                                  select veri).FirstOrDefault();
 
             if (bulunan == null)
@@ -80,44 +47,44 @@ namespace ParxlabAVM.Services
         }
 
         [Route("SifreDegistir")]
-        [ResponseType(typeof(kullanici))]
+        [ResponseType(typeof(AspNetUsers))]
         [HttpPost]
-        public IHttpActionResult SifreDegistir(IdEskiYeniSifre kullanici)
+        public IHttpActionResult SifreDegistir(IdEskiYeniSifre verilen)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.eskiSifre
+            AspNetUsers bulunan = (from veri in db.AspNetUsers
+                                 where veri.UserName == verilen.kullaniciid && veri.PasswordHash == verilen.eskiSifre
                                  select veri).FirstOrDefault();
 
             if (bulunan == null)
             {
                 return NotFound();
             }
-            bulunan.sifre = kullanici.yeniSifre;
+            bulunan.PasswordHash = verilen.yeniSifre;
             db.SaveChanges();
             return Ok(bulunan);
         }
 
-        [ResponseType(typeof(kullanici))]
+        [ResponseType(typeof(AspNetUsers))]
         [HttpPost]
         [Route("KullaniciEkle")]
-        public IHttpActionResult KullaniciEkle(kullanici kullanici)
+        public IHttpActionResult KullaniciEkle(AspNetUsers verilen)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == @kullanici.kullaniciid select veri).FirstOrDefault();
+            AspNetUsers bulunan = (from veri in db.AspNetUsers
+                                 where veri.UserName == verilen.UserName select veri).FirstOrDefault();
 
             if (bulunan == null)
             {
-                db.kullanici.Add(kullanici);
+                db.AspNetUsers.Add(verilen);
                 db.SaveChanges();
                 return Ok();// 200 Ok
             }
@@ -136,7 +103,7 @@ namespace ParxlabAVM.Services
 
         private bool kullaniciExists(string id)
         {
-            return db.kullanici.Count(e => e.kullaniciid == id) > 0;
+            return db.AspNetUsers.Count(e => e.UserName == id) > 0;
         }
     }
 }
