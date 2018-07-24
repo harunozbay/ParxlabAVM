@@ -40,7 +40,7 @@ namespace ParxlabAVM.Controllers
 
             int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
             double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1, simdi);
+            double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1);
 
 
             ViewBag.bugunkuAracSayisi = bugunkuAracSayisi;
