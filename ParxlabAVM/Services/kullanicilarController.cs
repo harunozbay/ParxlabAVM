@@ -12,6 +12,7 @@ using ParxlabAVM.Models;
 
 namespace ParxlabAVM.Services
 {
+    [RoutePrefix("api/kullanicilar")]
     public class kullanicilarController : ApiController
     {
         private Model db = new Model();
@@ -57,6 +58,7 @@ namespace ParxlabAVM.Services
         }
 
         // POST: api/kullanicilar
+        [Route("KullaniciDogrula")]
         [ResponseType(typeof(kullanici))]
         [HttpPost]
         public IHttpActionResult KullaniciDogrula(IdSifreIkilisi kullanici)
@@ -67,7 +69,7 @@ namespace ParxlabAVM.Services
             }
 
             kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == kullanici.kullaniciid && veri.sifre == kullanici.sifre
+                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.sifre
                                  select veri).FirstOrDefault();
 
             if (bulunan == null)
@@ -75,6 +77,51 @@ namespace ParxlabAVM.Services
                 return NotFound();
             }
             return Ok(bulunan);
+        }
+
+        [Route("SifreDegistir")]
+        [ResponseType(typeof(kullanici))]
+        [HttpPost]
+        public IHttpActionResult SifreDegistir(IdEskiYeniSifre kullanici)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            kullanici bulunan = (from veri in db.kullanici
+                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.eskiSifre
+                                 select veri).FirstOrDefault();
+
+            if (bulunan == null)
+            {
+                return NotFound();
+            }
+            bulunan.sifre = kullanici.yeniSifre;
+            db.SaveChanges();
+            return Ok(bulunan);
+        }
+
+        [ResponseType(typeof(kullanici))]
+        [HttpPost]
+        [Route("KullaniciEkle")]
+        public IHttpActionResult KullaniciEkle(kullanici kullanici)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            kullanici bulunan = (from veri in db.kullanici
+                                 where veri.kullaniciid == @kullanici.kullaniciid select veri).FirstOrDefault();
+
+            if (bulunan == null)
+            {
+                db.kullanici.Add(kullanici);
+                db.SaveChanges();
+                return Ok();// 200 Ok
+            }
+            return Conflict();//409 Conflict
         }
 
 
