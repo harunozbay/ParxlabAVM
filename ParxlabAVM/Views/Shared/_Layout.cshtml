@@ -14,7 +14,7 @@
     <meta name="twitter:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
 
     <!-- Facebook -->
-    <meta property="og:url" content="http://themepixels.me/bracketplus">
+    <meta property="og:url" content="http://parxlab.co">
     <meta property="og:title" content="Parxlab">
     <meta property="og:description" content="Arabayı nereye park ettim devrine son.">
 
@@ -41,6 +41,7 @@
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="../../BracketDashboard/css/bracket.css">
 
+    <!-- Harita için -->
     <style type="text/css">
         #map {
             width: 100%;
@@ -127,8 +128,6 @@
         <br>
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->
-
-
     <!-- ########## START: HEAD PANEL ########## -->
     <div class="br-header">
         <div class="br-header-left">
@@ -143,7 +142,7 @@
         </div><!-- br-header-left -->
         <div class="br-header-right">
             <nav class="nav">
-               
+
                 <div class="dropdown">
                     <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
                         <span class="logged-name hidden-md-down">Harun</span>
@@ -174,19 +173,17 @@
                     </div><!-- dropdown-menu -->
                 </div><!-- dropdown -->
             </nav>
-            
+
         </div><!-- br-header-right -->
     </div><!-- br-header -->
     <!-- ########## END: HEAD PANEL ########## -->
-
-
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="br-mainpanel">
         <div class="br-pagetitle">
             <i class="icon ion-ios-home-outline"></i>
             <div>
                 <h4>Parxlab</h4>
-                <p class="mg-b-0">Arabayı nereye parkettim devrine son.</p>
+                <p class="mg-b-0">Arabayı nereye park ettim devrine son.</p>
             </div>
         </div><!-- d-flex -->
         <div class="br-pagebody">
@@ -215,7 +212,7 @@
     <script src="../../BracketDashboard/lib/select2/js/select2.full.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyCuWEQWfVkWfcUoSIZeGw5JioT9LVCwYkE&libraries=drawing,geometry"></script>
     @*<script src="../../BracketDashboard/lib/gmaps/gmaps.js"></script>
-    <script src="../../BracketDashboard/js/map.shiftworker.js"></script>*@
+        <script src="../../BracketDashboard/js/map.shiftworker.js"></script>*@
     <script>
         //Gmaps kutüphanesi ile
         //var map = new GMaps({
@@ -240,24 +237,31 @@
         //    strokeOpacity: 0.6,
         //    strokeWeight: 6
         //});
+
+        //Google Maps Api v3 Data Layer
         var map;
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 39.950330, lng: 32.832764, },
-                zoom: 18,
+                center: { /*ankamall*/ lat: 39.950834, lng: 32.832705, },
+                zoom: 20,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControl: false
             });
-            map.data.setControls(['Polygon']);
+            map.data.setControls(['Polygon', 'LineString']);
+
             map.data.setStyle({
                 editable: true,
-                draggable: true
+                draggable: true,
+                fillColor: '#90EE90',
+                fillOpacity: 1,
+                strokeWeight: 2,
+                strokeColor: '#CD5C5C'
             });
             bindDataLayerListeners(map.data);
 
             //load saved data
             loadPolygons(map);
-           
+
         }
 
         function bindDataLayerListeners(dataLayer) {
@@ -278,15 +282,39 @@
         function savePolygon() {
             map.data.toGeoJson(function (json) {
                 localStorage.setItem('geoData', JSON.stringify(json));
+                initControls(json);
             });
         }
 
+        //Kayıt edilen şekilleri silmek için
+        function initControls(data) {
+            var sel = document.getElementById('polyList');
+            sel.options.length = 0;
+
+            for (var i = 0; i < data.features.length; i++) {
+                var opt = document.createElement('option');
+                opt.innerHTML = data.features[i].geometry.type;
+                opt.value = i;
+                sel.appendChild(opt);
+            }
+
+            document.getElementById("btnDelete").disabled = (data.features.length === 0);
+            document.getElementById("btnDelete").onclick = function () {
+                var selIdx = sel.options[sel.selectedIndex].value; //get poly index
+                data.features.splice(parseInt(selIdx), 1);
+
+                //reload
+                localStorage.setItem('geoData', JSON.stringify(data));
+                initControls(data);
+                loadPolygons(map);
+            };
+        }
         initMap();
-       
+
     </script>
 
 
-    
+
     <script src="../../BracketDashboard/js/bracket.js"></script>
 
     <script src="../../BracketDashboard/js/ResizeSensor.js"></script>
