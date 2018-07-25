@@ -97,7 +97,7 @@ namespace ParxlabAVM.Helpers
                     if (DateTime.Compare((DateTime)item.giriszamani, dilimBasi) >= 0 )
                     {
                         //Dilimin içinde girip henüz çıkmamış
-                        toplam += DateTime.Now.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
+                        toplam += dilimSonu.Subtract(((DateTime)item.giriszamani)).TotalSeconds / 3600.0;
                     }
                     else
                     {
