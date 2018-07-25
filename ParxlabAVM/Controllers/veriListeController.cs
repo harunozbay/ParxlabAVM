@@ -34,7 +34,7 @@ namespace ParxlabAVM.Controllers
         public ActionResult AnlikDoluluk(int id)
         {
 
-            return View(GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(id, new DateTime(2018, 7, 19, 11, 0, 0)));
+            return View(GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(id,'p', new DateTime(2018, 7, 19, 11, 0, 0)));
         }
         public ActionResult Gunluk(int id)
         {

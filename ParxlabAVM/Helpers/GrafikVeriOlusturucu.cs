@@ -336,31 +336,60 @@ namespace ParxlabAVM.Helpers
         }
 
 
-        public static double AnlikDolulukOrani(int parkId)
+        public static double AnlikDolulukOrani(int id,char anahtar)
         {
-            Model veritabani = new Model();
-            IQueryable<cihaz> tumCihazlar = (from cihaz in veritabani.cihaz where cihaz.parkid == parkId select cihaz);
-            double doluCihazlarinSayisi = (from cihaz in tumCihazlar where cihaz.cihazdurumu == 1 select cihaz).Count();
+            if (anahtar == 'p')
+            {
+                Model veritabani = new Model();
+                IQueryable<cihaz> tumCihazlar = (from cihaz in veritabani.cihaz where cihaz.parkid == id select cihaz);
+                double doluCihazlarinSayisi = (from cihaz in tumCihazlar where cihaz.cihazdurumu == 1 select cihaz).Count();
 
-            return doluCihazlarinSayisi / tumCihazlar.Count();
+                return doluCihazlarinSayisi / tumCihazlar.Count();
+            }
+            else if (anahtar == 'f')
+            {
+                Model veritabani = new Model();
+                IQueryable<cihaz> tumCihazlar = (from cihaz in veritabani.cihaz where cihaz.parkyeri.firmaid == id select cihaz);
+                double doluCihazlarinSayisi = (from cihaz in tumCihazlar where cihaz.cihazdurumu == 1 select cihaz).Count();
+
+                return doluCihazlarinSayisi / tumCihazlar.Count();
+            }
+            return -1;
         }
 
-        public static double HerhangiBirAndaDolulukOranı(int parkId,DateTime an)
+        public static double HerhangiBirAndaDolulukOranı(int id,char anahtar ,DateTime an)
         {
             /* Bu fonksiyon verilen bir anda (saniyeye kadar çözünürlükle) verilen bir parktaki cihazların doluluk oranını verir
              * Tüm anatablolarda giriş zamanı verilen andan önce çıkış zamanı ise sonra olanlar sayılır
              * Verilen parktaki tüm cihazların sayısına bölünür
              */
             Model veritabani = new Model();
-            IQueryable<anatablo> tumKayitlar = (from anatablo in veritabani.anatablo where anatablo.parkid == parkId select anatablo);
-            int tumCihazlar = (from veri in veritabani.cihaz where veri.parkid == parkId select veri).Count();
-            double doluCihazlarinSayisi = (from kayit in tumKayitlar
-                                           where
-                                           (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0 && kayit.cikiszamani == null)
-                                            || (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0
-                                            && DateTime.Compare((DateTime)kayit.cikiszamani, an) >= 0)
-                                           select kayit).Count();
-            return doluCihazlarinSayisi / tumCihazlar;
+            if (anahtar == 'p')
+            {
+                IQueryable<anatablo> tumKayitlar = (from anatablo in veritabani.anatablo where anatablo.parkid == id select anatablo);
+                int tumCihazlar = (from veri in veritabani.cihaz where veri.parkid == id select veri).Count();
+                double doluCihazlarinSayisi = (from kayit in tumKayitlar
+                                               where
+                                               (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0 && kayit.cikiszamani == null)
+                                                || (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0
+                                                && DateTime.Compare((DateTime)kayit.cikiszamani, an) >= 0)
+                                               select kayit).Count();
+                return doluCihazlarinSayisi / tumCihazlar;
+            }
+            else if (anahtar == 'f')
+            {
+                IQueryable<anatablo> tumKayitlar = (from anatablo in veritabani.anatablo where anatablo.parkyeri.firmaid == id select anatablo);
+                int tumCihazlar = (from veri in veritabani.cihaz where veri.parkyeri.firmaid == id select veri).Count();
+                double doluCihazlarinSayisi = (from kayit in tumKayitlar
+                                               where
+                                               (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0 && kayit.cikiszamani == null)
+                                                || (DateTime.Compare((DateTime)kayit.giriszamani, an) <= 0
+                                                && DateTime.Compare((DateTime)kayit.cikiszamani, an) >= 0)
+                                               select kayit).Count();
+                return doluCihazlarinSayisi / tumCihazlar;
+            }
+            return -1;
+            
         }
         
         public static List<ZamanAraligiVerisi> OrtalamaBul(int sonBoyut, List<ZamanAraligiVerisi> veriler)
