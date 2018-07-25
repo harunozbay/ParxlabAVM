@@ -38,8 +38,8 @@ namespace ParxlabAVM.Controllers
             DateTime gununBaslangici = DateTime.Today;
             int gecenSaniye = (int)simdi.Subtract(gununBaslangici).TotalSeconds;
 
-            int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
+            int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(7,'p', gununBaslangici, simdi, gecenSaniye)[0].Deger;
+            double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(7, 'p', gununBaslangici, simdi, gecenSaniye)[0].Deger;
             double anlikDoluluk = GrafikVeriOlusturucu.AnlikDolulukOrani(1);
 
 
@@ -73,11 +73,10 @@ namespace ParxlabAVM.Controllers
 
             List<int> arabaSayisi = new List<int>();
             List<string> etiketler = new List<string>();
-            string[] format = { "dd", "MM" };
-            foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(1, girisZamani, cikisZamani))
+            foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(7, 'p', girisZamani, cikisZamani))
             {
                 arabaSayisi.Add((int)(i.Deger));
-                etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i, format, false));
+                etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i, "dd/MM", false));
 
             }
 
