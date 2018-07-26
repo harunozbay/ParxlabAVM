@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,13 +80,42 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
@@ -684,6 +714,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="obj\Debug\ParxlabAVM.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\ParxlabAVM.dll" />
+    <Content Include="obj\Debug\ParxlabAVM.pdb" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
@@ -782,13 +815,57 @@
     <Content Include="BracketDashboard\scss\util\_position.scss" />
     <Content Include="BracketDashboard\scss\util\_typography.scss" />
     <Content Include="BracketDashboard\scss\util\_width.scss" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\ParxlabAVM.csproj.CopyComplete" />
+    <Content Include="obj\Debug\ParxlabAVM.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\ParxlabAVM.csprojAssemblyReference.cache" />
+    <None Include="Properties\PublishProfiles\ParxlabAVM20180721110909 - Web Deploy.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
+    <None Include="scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <None Include="scripts\jquery.validate-vsdoc.js" />
+    <Content Include="scripts\jquery.validate.js" />
+    <Content Include="scripts\jquery.validate.min.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="Views\veriListe\Anatablo.cshtml" />
     <Content Include="Web.config" />
-    <Content Include="Views\Grafik\Index.cshtml" />
+    <Content Include="Views\Account\Error.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Giris\Index.cshtml" />
+    <Content Include="Views\Home\GrafikCiz.cshtml" />
+    <Content Include="Views\Home\GrafikForm.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\RoleAdmin\Create.cshtml" />
+    <Content Include="Views\RoleAdmin\Edit.cshtml" />
+    <Content Include="Views\RoleAdmin\Index.cshtml" />
+    <Content Include="Views\veriListe\AnatabloCihaz.cshtml" />
+    <Content Include="Views\veriListe\AnatabloPark.cshtml" />
+    <Content Include="Views\veriListe\AnlikDoluluk.cshtml" />
+    <Content Include="Views\veriListe\Aylik.cshtml" />
+    <Content Include="Views\veriListe\AylikOrtalama.cshtml" />
+    <Content Include="Views\veriListe\Gunluk.cshtml" />
+    <Content Include="Views\veriListe\Doluluk.cshtml" />
+    <Content Include="Views\veriListe\Haftalik.cshtml" />
+    <Content Include="Views\veriListe\HaftalikOrtalama.cshtml" />
+    <Content Include="Views\veriListe\OrtalamaDoluluk.cshtml" />
+    <Content Include="Views\veriListe\Saatlik.cshtml" />
+    <Content Include="Views\veriListe\SaatlikOrtalama.cshtml" />
+    <Content Include="Views\veriListe\Yillik.cshtml" />
+    <Content Include="Views\cihaz\Create.cshtml" />
+    <Content Include="Views\cihaz\Delete.cshtml" />
+    <Content Include="Views\cihaz\Details.cshtml" />
+    <Content Include="Views\cihaz\Edit.cshtml" />
+    <Content Include="Views\cihaz\Index.cshtml" />
+    <Content Include="Views\anatablo\Create.cshtml" />
+    <Content Include="Views\anatablo\Delete.cshtml" />
+    <Content Include="Views\anatablo\Details.cshtml" />
+    <Content Include="Views\anatablo\Edit.cshtml" />
+    <Content Include="Views\anatablo\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -797,16 +874,26 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\GrafikController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\anatabloController.cs" />
+    <Compile Include="Controllers\cihazController.cs" />
+    <Compile Include="Controllers\GirisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\requiredAttribute.cs" />
+    <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\veriListeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GrafikVeriOlusturucu.cs" />
     <Compile Include="Helpers\ZamanAraligiVerisi.cs" />
+    <Compile Include="Identity\ApplicationRole.cs" />
+    <Compile Include="Identity\ApplicationUser.cs" />
+    <Compile Include="Identity\IdentityDataContext.cs" />
     <Compile Include="Models\anatablo.cs" />
     <Compile Include="Models\cihaz.cs" />
     <Compile Include="Models\firma.cs" />
@@ -815,17 +902,24 @@
     <Compile Include="Models\kullanici.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\parkyeri.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\yetki.cs" />
     <Compile Include="Models\yetkili.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\cihazlarController.cs" />
+    <Compile Include="Services\IdEskiYeniSifre.cs" />
     <Compile Include="Services\IdSifreIkilisi.cs" />
     <Compile Include="Services\ilcelerController.cs" />
     <Compile Include="Services\kullanicilarController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -836,21 +930,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Grafik\GrafikCiz.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\veriListe\Aylik.cshtml" />
-    <Content Include="Views\veriListe\Haftalik.cshtml" />
-    <Content Include="Views\veriListe\Yillik.cshtml" />
-    <Content Include="Views\veriListe\HaftalikOrtalama.cshtml" />
-    <Content Include="Views\veriListe\SaatlikOrtalama.cshtml" />
-    <Content Include="Views\veriListe\OrtalamaDoluluk.cshtml" />
-    <Content Include="Views\veriListe\Doluluk.cshtml" />
-    <Content Include="Views\veriListe\Saatlik.cshtml" />
-    <Content Include="Views\veriListe\AnatabloPark.cshtml" />
-    <Content Include="Views\veriListe\AnatabloCihaz.cshtml" />
-    <Content Include="Views\veriListe\AylikOrtalama.cshtml" />
-    <Content Include="Views\veriListe\Gunluk.cshtml" />
-    <Content Include="Views\veriListe\AnlikDoluluk.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -861,6 +940,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BracketDashboard\lib\codemirror\mode\rpm\changes\" />
+    <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\AracSayisi\" />
   </ItemGroup>
   <ItemGroup>
