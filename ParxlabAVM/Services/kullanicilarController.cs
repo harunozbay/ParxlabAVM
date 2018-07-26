@@ -9,6 +9,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ParxlabAVM.Models;
+using Microsoft.AspNet.Identity;
+using ParxlabAVM.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ParxlabAVM.Services
 {
@@ -16,6 +19,7 @@ namespace ParxlabAVM.Services
     public class kullanicilarController : ApiController
     {
         private Model db = new Model();
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
 
         public IQueryable<AspNetUsers> Getkullanici()
         {
@@ -35,15 +39,13 @@ namespace ParxlabAVM.Services
                 return BadRequest(ModelState);
             }
 
-            AspNetUsers bulunan = (from veri in db.AspNetUsers
-                                 where veri.UserName == @verilen.kullaniciid && veri.PasswordHash == verilen.sifre
-                                 select veri).FirstOrDefault();
+            var bulunan = userManager.Find(verilen.kullaniciid, verilen.sifre);
 
             if (bulunan == null)
             {
                 return NotFound();
             }
-            return Ok(bulunan);
+            return Ok();
         }
 
         [Route("SifreDegistir")]
@@ -56,23 +58,29 @@ namespace ParxlabAVM.Services
                 return BadRequest(ModelState);
             }
 
-            AspNetUsers bulunan = (from veri in db.AspNetUsers
-                                 where veri.UserName == verilen.kullaniciid && veri.PasswordHash == verilen.eskiSifre
-                                 select veri).FirstOrDefault();
+            var bulunan = userManager.Find(verilen.kullaniciid, verilen.eskiSifre);
 
             if (bulunan == null)
             {
                 return NotFound();
             }
-            bulunan.PasswordHash = verilen.yeniSifre;
-            db.SaveChanges();
-            return Ok(bulunan);
+            bulunan.PasswordHash = userManager.PasswordHasher.HashPassword(verilen.yeniSifre);
+            var result = userManager.Update(bulunan);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
 
         [ResponseType(typeof(AspNetUsers))]
         [HttpPost]
         [Route("KullaniciEkle")]
-        public IHttpActionResult KullaniciEkle(AspNetUsers verilen)
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public IHttpActionResult KullaniciEkle(Register verilen)
         {
             if (!ModelState.IsValid)
             {
@@ -80,13 +88,26 @@ namespace ParxlabAVM.Services
             }
 
             AspNetUsers bulunan = (from veri in db.AspNetUsers
-                                 where veri.UserName == verilen.UserName select veri).FirstOrDefault();
+                                 where veri.UserName == verilen.kullaniciid select veri).FirstOrDefault();
 
             if (bulunan == null)
             {
-                db.AspNetUsers.Add(verilen);
-                db.SaveChanges();
-                return Ok();// 200 Ok
+                var user = new ApplicationUser();
+                user.UserName = verilen.kullaniciid;
+                user.Email = verilen.Email;
+
+                var result = userManager.Create(user, verilen.sifre);
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, "User");
+                    return Ok(); //200 Ok
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
             }
             return Conflict();//409 Conflict
         }
