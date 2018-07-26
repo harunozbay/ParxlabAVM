@@ -866,6 +866,7 @@
     <Content Include="Views\anatablo\Details.cshtml" />
     <Content Include="Views\anatablo\Edit.cshtml" />
     <Content Include="Views\anatablo\Index.cshtml" />
+    <Content Include="Views\veriListe\Double.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
