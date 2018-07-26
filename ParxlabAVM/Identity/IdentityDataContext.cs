@@ -21,6 +21,10 @@ namespace ParxlabAVM.Identity
             builder.Entity<ApplicationUser>().ToTable("kullanici");
             builder.Entity<IdentityRole>().ToTable("yetki");
             builder.Entity<IdentityUserRole>().ToTable("kullaniciyetkisi");
+            builder.Entity<ApplicationUser>().Property(p => p.Id).HasColumnName("kullaniciid");
+            builder.Entity<ApplicationUser>().Property(p => p.UserName).HasColumnName("kullaniciadi");
+            builder.Entity<ApplicationUser>().Property(p => p.PasswordHash).HasColumnName("sifre");
+            builder.Entity<ApplicationUser>().Property(p => p.PhoneNumber).HasColumnName("telefonnumarasi");
 
 
 
