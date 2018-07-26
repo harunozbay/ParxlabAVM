@@ -150,35 +150,7 @@ namespace ParxlabAVM.Controllers
 
         }
 
-        //grafik sayfası getirici
-        [HttpGet]
-        public ActionResult GrafikForm()
-        {
-            return View();
-        }
 
-
-        //grafik veri gönderici
-        [HttpPost]
-        public ActionResult GrafikForm(string Giris, string Cikis)
-        {
-
-            DateTime girisZamani = DateTime.ParseExact(Giris, "dd/MM/yyyy HH:mm", null);
-            DateTime cikisZamani = DateTime.ParseExact(Cikis, "dd/MM/yyyy HH:mm", null);
-
-            List<int> arabaSayisi = new List<int>();
-            List<string> etiketler = new List<string>();
-            string[] format = { "dd", "MM" };
-            foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(1, girisZamani, cikisZamani))
-            {
-                arabaSayisi.Add((int)(i.Deger));
-                etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i, format, false));
-
-            }
-
-            ViewBag.Etiketler = etiketler;
-            return View("GrafikCiz", arabaSayisi);
-        }
 
         // GET: Home/Details/5
         public ActionResult Details(int? id)
