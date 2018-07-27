@@ -18,6 +18,6 @@ namespace ParxlabAVM.Models
 
         public string ClaimValue { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual kullanici AspNetUsers { get; set; }
     }
 }

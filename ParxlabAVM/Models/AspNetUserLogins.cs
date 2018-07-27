@@ -20,6 +20,6 @@ namespace ParxlabAVM.Models
         [Column(Order = 2)]
         public string UserId { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual kullanici AspNetUsers { get; set; }
     }
 }

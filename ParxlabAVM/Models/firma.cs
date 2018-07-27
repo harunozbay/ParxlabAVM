@@ -33,7 +33,7 @@ namespace ParxlabAVM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<anatablo> anatablo { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual kullanici AspNetUsers { get; set; }
 
         public virtual il il { get; set; }
 

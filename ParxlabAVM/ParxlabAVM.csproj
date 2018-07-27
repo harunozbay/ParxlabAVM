@@ -907,7 +907,7 @@
     <Compile Include="Models\AspNetRoles.cs" />
     <Compile Include="Models\AspNetUserClaims.cs" />
     <Compile Include="Models\AspNetUserLogins.cs" />
-    <Compile Include="Models\AspNetUsers.cs" />
+    <Compile Include="Models\kullanici.cs" />
     <Compile Include="Models\cihaz.cs" />
     <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\firma.cs" />

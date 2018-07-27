@@ -11,7 +11,7 @@ namespace ParxlabAVM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetRoles()
         {
-            AspNetUsers = new HashSet<AspNetUsers>();
+            AspNetUsers = new HashSet<kullanici>();
         }
 
         public string Id { get; set; }
@@ -27,6 +27,6 @@ namespace ParxlabAVM.Models
         public string Discriminator { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
+        public virtual ICollection<kullanici> AspNetUsers { get; set; }
     }
 }

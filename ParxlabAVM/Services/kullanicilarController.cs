@@ -21,7 +21,7 @@ namespace ParxlabAVM.Services
         private Model db = new Model();
         private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
 
-        public IQueryable<AspNetUsers> Getkullanici()
+        public IQueryable<kullanici> Getkullanici()
         {
             return db.AspNetUsers;
         }
@@ -30,7 +30,7 @@ namespace ParxlabAVM.Services
 
         // POST: api/kullanicilar
         [Route("KullaniciDogrula")]
-        [ResponseType(typeof(AspNetUsers))]
+        [ResponseType(typeof(kullanici))]
         [HttpPost]
         public IHttpActionResult KullaniciDogrula(IdSifreIkilisi verilen)
         {
@@ -49,7 +49,7 @@ namespace ParxlabAVM.Services
         }
 
         [Route("SifreDegistir")]
-        [ResponseType(typeof(AspNetUsers))]
+        [ResponseType(typeof(kullanici))]
         [HttpPost]
         public IHttpActionResult SifreDegistir(IdEskiYeniSifre verilen)
         {
@@ -75,7 +75,7 @@ namespace ParxlabAVM.Services
             return Ok();
         }
 
-        [ResponseType(typeof(AspNetUsers))]
+        [ResponseType(typeof(kullanici))]
         [HttpPost]
         [Route("KullaniciEkle")]
         [System.Web.Mvc.ValidateAntiForgeryToken]
@@ -87,8 +87,8 @@ namespace ParxlabAVM.Services
                 return BadRequest(ModelState);
             }
 
-            AspNetUsers bulunan = (from veri in db.AspNetUsers
-                                 where veri.UserName == verilen.kullaniciid select veri).FirstOrDefault();
+            kullanici bulunan = (from veri in db.AspNetUsers
+                                 where veri.kullaniciadi == verilen.kullaniciid select veri).FirstOrDefault();
 
             if (bulunan == null)
             {
@@ -124,7 +124,7 @@ namespace ParxlabAVM.Services
 
         private bool kullaniciExists(string id)
         {
-            return db.AspNetUsers.Count(e => e.UserName == id) > 0;
+            return db.AspNetUsers.Count(e => e.kullaniciadi == id) > 0;
         }
     }
 }

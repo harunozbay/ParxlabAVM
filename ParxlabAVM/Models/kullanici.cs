@@ -8,10 +8,10 @@ namespace ParxlabAVM.Models
     using System.Data.Entity.Spatial;
 
     [Table("kullanici")]
-    public partial class AspNetUsers
+    public partial class kullanici
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetUsers()
+        public kullanici()
         {
             anatablo = new HashSet<anatablo>();
             AspNetUserClaims = new HashSet<AspNetUserClaims>();
@@ -20,18 +20,18 @@ namespace ParxlabAVM.Models
             AspNetRoles = new HashSet<AspNetRoles>();
         }
 
-        public string Id { get; set; }
+        public string kullaniciid { get; set; }
 
         [StringLength(256)]
         public string Email { get; set; }
 
         public bool EmailConfirmed { get; set; }
 
-        public string PasswordHash { get; set; }
+        public string sifre { get; set; }
 
         public string SecurityStamp { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string telefonnumarasi { get; set; }
 
         public bool PhoneNumberConfirmed { get; set; }
 
@@ -45,7 +45,7 @@ namespace ParxlabAVM.Models
 
         [Required]
         [StringLength(256)]
-        public string UserName { get; set; }
+        public string kullaniciadi { get; set; }
 
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

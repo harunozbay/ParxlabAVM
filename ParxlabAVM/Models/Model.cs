@@ -17,7 +17,7 @@ namespace ParxlabAVM.Models
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<kullanici> AspNetUsers { get; set; }
         public virtual DbSet<cihaz> cihaz { get; set; }
         public virtual DbSet<firma> firma { get; set; }
         public virtual DbSet<il> il { get; set; }
@@ -43,22 +43,22 @@ namespace ParxlabAVM.Models
                 .WithMany(e => e.AspNetRoles)
                 .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
 
-            modelBuilder.Entity<AspNetUsers>()
+            modelBuilder.Entity<kullanici>()
                 .HasMany(e => e.anatablo)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.kullaniciid);
 
-            modelBuilder.Entity<AspNetUsers>()
+            modelBuilder.Entity<kullanici>()
                 .HasMany(e => e.AspNetUserClaims)
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
 
-            modelBuilder.Entity<AspNetUsers>()
+            modelBuilder.Entity<kullanici>()
                 .HasMany(e => e.AspNetUserLogins)
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
 
-            modelBuilder.Entity<AspNetUsers>()
+            modelBuilder.Entity<kullanici>()
                 .HasMany(e => e.firma)
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.yetkilikullaniciid)

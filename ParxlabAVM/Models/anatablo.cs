@@ -29,7 +29,7 @@ namespace ParxlabAVM.Models
 
         public int anatabloid { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual kullanici AspNetUsers { get; set; }
 
         public virtual firma firma { get; set; }
 
