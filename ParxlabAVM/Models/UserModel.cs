@@ -12,22 +12,22 @@ namespace ParxlabAVM.Models
     public class Register
     {
         [Required]
-        public string Username { get; set; }
+        public string kullaniciid { get; set; }
 
         [Required]
         public string Email { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string sifre { get; set; }
     }
 
     public class LoginModel
     {
         [Required]
-        public string Username { get; set; }
+        public string kullaniciid { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string sifre { get; set; }
     }
 
     public class RoleEditModel    //http get ile gelecek memberları foreach ile açmak için

@@ -5,7 +5,6 @@ namespace ParxlabAVM.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using Newtonsoft.Json;
 
     [Table("anatablo")]
     public partial class anatablo
@@ -25,18 +24,17 @@ namespace ParxlabAVM.Models
         [StringLength(45)]
         public string aracplakasi { get; set; }
 
-        [Required]
-        [StringLength(45)]
+        [StringLength(128)]
         public string kullaniciid { get; set; }
 
         public int anatabloid { get; set; }
-        [JsonIgnore]
+
+        public virtual kullanici AspNetUsers { get; set; }
+
         public virtual firma firma { get; set; }
-        [JsonIgnore]
-        public virtual kullanici kullanici { get; set; }
-        [JsonIgnore]
+
         public virtual parkyeri parkyeri { get; set; }
-        [JsonIgnore]
+
         public virtual cihaz cihaz { get; set; }
     }
 }

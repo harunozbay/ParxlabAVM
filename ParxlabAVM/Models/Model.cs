@@ -8,19 +8,21 @@ namespace ParxlabAVM.Models
     public partial class Model : DbContext
     {
         public Model()
-            : base("name=NewModel")
+            : base("name=NewModel2")
         {
         }
 
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<anatablo> anatablo { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<kullanici> AspNetUsers { get; set; }
         public virtual DbSet<cihaz> cihaz { get; set; }
         public virtual DbSet<firma> firma { get; set; }
         public virtual DbSet<il> il { get; set; }
         public virtual DbSet<ilce> ilce { get; set; }
-        public virtual DbSet<kullanici> kullanici { get; set; }
         public virtual DbSet<parkyeri> parkyeri { get; set; }
-        public virtual DbSet<yetki> yetki { get; set; }
-        public virtual DbSet<yetkili> yetkili { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -36,9 +38,31 @@ namespace ParxlabAVM.Models
                 .Property(e => e.aracplakasi)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<anatablo>()
-                .Property(e => e.kullaniciid)
-                .IsUnicode(false);
+            modelBuilder.Entity<AspNetRoles>()
+                .HasMany(e => e.AspNetUsers)
+                .WithMany(e => e.AspNetRoles)
+                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
+
+            modelBuilder.Entity<kullanici>()
+                .HasMany(e => e.anatablo)
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.kullaniciid);
+
+            modelBuilder.Entity<kullanici>()
+                .HasMany(e => e.AspNetUserClaims)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<kullanici>()
+                .HasMany(e => e.AspNetUserLogins)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<kullanici>()
+                .HasMany(e => e.firma)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.yetkilikullaniciid)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cihaz>()
                 .HasMany(e => e.anatablo)
@@ -84,27 +108,6 @@ namespace ParxlabAVM.Models
                 .WithRequired(e => e.ilce)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<kullanici>()
-                .Property(e => e.kullaniciid)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<kullanici>()
-                .Property(e => e.sifre)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<kullanici>()
-                .Property(e => e.kullaniciadi)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<kullanici>()
-                .Property(e => e.kullanicisoyadi)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<kullanici>()
-                .HasMany(e => e.anatablo)
-                .WithRequired(e => e.kullanici)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<parkyeri>()
                 .Property(e => e.parkadi)
                 .IsUnicode(false);
@@ -117,36 +120,6 @@ namespace ParxlabAVM.Models
             modelBuilder.Entity<parkyeri>()
                 .HasMany(e => e.cihaz)
                 .WithRequired(e => e.parkyeri)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<yetki>()
-                .Property(e => e.yetki1)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<yetki>()
-                .HasMany(e => e.yetkili)
-                .WithRequired(e => e.yetki)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<yetkili>()
-                .Property(e => e.adi)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<yetkili>()
-                .Property(e => e.soyadi)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<yetkili>()
-                .Property(e => e.sifre)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<yetkili>()
-                .Property(e => e.kullaniciadi)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<yetkili>()
-                .HasMany(e => e.firma)
-                .WithRequired(e => e.yetkili)
                 .WillCascadeOnDelete(false);
         }
     }

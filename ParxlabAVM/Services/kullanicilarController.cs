@@ -9,6 +9,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ParxlabAVM.Models;
+using Microsoft.AspNet.Identity;
+using ParxlabAVM.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ParxlabAVM.Services
 {
@@ -16,110 +19,95 @@ namespace ParxlabAVM.Services
     public class kullanicilarController : ApiController
     {
         private Model db = new Model();
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
 
         public IQueryable<kullanici> Getkullanici()
         {
-            return db.kullanici;
+            return db.AspNetUsers;
         }
 
-        // PUT: api/kullanicilar/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putkullanici(string id, kullanici kullanici)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != kullanici.kullaniciid)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(kullanici).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!kullaniciExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
 
         // POST: api/kullanicilar
         [Route("KullaniciDogrula")]
         [ResponseType(typeof(kullanici))]
         [HttpPost]
-        public IHttpActionResult KullaniciDogrula(IdSifreIkilisi kullanici)
+        public IHttpActionResult KullaniciDogrula(IdSifreIkilisi verilen)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.sifre
-                                 select veri).FirstOrDefault();
+            var bulunan = userManager.Find(verilen.kullaniciid, verilen.sifre);
 
             if (bulunan == null)
             {
                 return NotFound();
             }
-            return Ok(bulunan);
+            return Ok();
         }
 
         [Route("SifreDegistir")]
         [ResponseType(typeof(kullanici))]
         [HttpPost]
-        public IHttpActionResult SifreDegistir(IdEskiYeniSifre kullanici)
+        public IHttpActionResult SifreDegistir(IdEskiYeniSifre verilen)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == @kullanici.kullaniciid && veri.sifre == @kullanici.eskiSifre
-                                 select veri).FirstOrDefault();
+            var bulunan = userManager.Find(verilen.kullaniciid, verilen.eskiSifre);
 
             if (bulunan == null)
             {
                 return NotFound();
             }
-            bulunan.sifre = kullanici.yeniSifre;
-            db.SaveChanges();
-            return Ok(bulunan);
+            bulunan.PasswordHash = userManager.PasswordHasher.HashPassword(verilen.yeniSifre);
+            var result = userManager.Update(bulunan);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
 
         [ResponseType(typeof(kullanici))]
         [HttpPost]
         [Route("KullaniciEkle")]
-        public IHttpActionResult KullaniciEkle(kullanici kullanici)
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public IHttpActionResult KullaniciEkle(Register verilen)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciid == @kullanici.kullaniciid select veri).FirstOrDefault();
+            kullanici bulunan = (from veri in db.AspNetUsers
+                                 where veri.kullaniciadi == verilen.kullaniciid select veri).FirstOrDefault();
 
             if (bulunan == null)
             {
-                db.kullanici.Add(kullanici);
-                db.SaveChanges();
-                return Ok();// 200 Ok
+                var user = new ApplicationUser();
+                user.UserName = verilen.kullaniciid;
+                user.Email = verilen.Email;
+
+                var result = userManager.Create(user, verilen.sifre);
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, "User");
+                    return Ok(); //200 Ok
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
             }
             return Conflict();//409 Conflict
         }
@@ -136,7 +124,7 @@ namespace ParxlabAVM.Services
 
         private bool kullaniciExists(string id)
         {
-            return db.kullanici.Count(e => e.kullaniciid == id) > 0;
+            return db.AspNetUsers.Count(e => e.kullaniciadi == id) > 0;
         }
     }
 }

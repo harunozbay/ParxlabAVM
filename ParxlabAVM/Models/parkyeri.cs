@@ -1,6 +1,5 @@
 namespace ParxlabAVM.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -25,13 +24,13 @@ namespace ParxlabAVM.Models
 
         [Key]
         public int parkid { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<anatablo> anatablo { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cihaz> cihaz { get; set; }
-        [JsonIgnore]
+
         public virtual firma firma { get; set; }
     }
 }
