@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ParxlabAVM.Identity;
-using ParxlabAVM.Models;
+using ParxlabAVM.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -41,7 +41,7 @@ namespace ParxlabAVM.Controllers
         {
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid");
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi");
-            ViewBag.kullaniciid = new SelectList(db.AspNetUsers, "kullaniciid", "sifre");
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre");
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi");
             return View();
         }
@@ -62,7 +62,7 @@ namespace ParxlabAVM.Controllers
 
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid", anatablo.cihazid);
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi", anatablo.firmaid);
-            ViewBag.kullaniciid = new SelectList(db.AspNetUsers, "kullaniciid", "sifre", anatablo.kullaniciid);
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre", anatablo.kullaniciid);
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi", anatablo.parkid);
             return View(anatablo);
         }
@@ -81,7 +81,7 @@ namespace ParxlabAVM.Controllers
             }
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid", anatablo.cihazid);
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi", anatablo.firmaid);
-            ViewBag.kullaniciid = new SelectList(db.AspNetUsers, "kullaniciid", "sifre", anatablo.kullaniciid);
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre", anatablo.kullaniciid);
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi", anatablo.parkid);
             return View(anatablo);
         }
@@ -101,7 +101,7 @@ namespace ParxlabAVM.Controllers
             }
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid", anatablo.cihazid);
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi", anatablo.firmaid);
-            ViewBag.kullaniciid = new SelectList(db.AspNetUsers, "kullaniciid", "sifre", anatablo.kullaniciid);
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre", anatablo.kullaniciid);
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi", anatablo.parkid);
             return View(anatablo);
         }
