@@ -1,5 +1,6 @@
 namespace ParxlabAVM.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -29,12 +30,16 @@ namespace ParxlabAVM.Models
 
         public int anatabloid { get; set; }
 
+        [JsonIgnore]
         public virtual kullanici AspNetUsers { get; set; }
 
+        [JsonIgnore]
         public virtual firma firma { get; set; }
 
+        [JsonIgnore]
         public virtual parkyeri parkyeri { get; set; }
 
+        [JsonIgnore]
         public virtual cihaz cihaz { get; set; }
     }
 }
