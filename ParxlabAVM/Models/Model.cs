@@ -17,7 +17,7 @@ namespace ParxlabAVM.Models
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<kullanici> AspNetUsers { get; set; }
+        public virtual DbSet<kullanici> kullanici { get; set; }
         public virtual DbSet<cihaz> cihaz { get; set; }
         public virtual DbSet<firma> firma { get; set; }
         public virtual DbSet<il> il { get; set; }
