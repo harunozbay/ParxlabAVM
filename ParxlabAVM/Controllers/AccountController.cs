@@ -54,10 +54,10 @@ namespace ParxlabAVM.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser();
-                user.UserName = model.Username;
+                user.UserName = model.kullaniciid;
                 user.Email = model.Email;
 
-                var result = userManager.Create(user, model.Password);
+                var result = userManager.Create(user, model.sifre);
 
                 if (result.Succeeded)
                 {
@@ -98,7 +98,7 @@ namespace ParxlabAVM.Controllers
             {
 
 
-                var user = userManager.Find(model.Username, model.Password);
+                var user = userManager.Find(model.kullaniciid, model.sifre);
 
                 if (user == null)
                 {
