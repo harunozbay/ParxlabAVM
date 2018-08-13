@@ -31,7 +31,7 @@ namespace ParxlabAVM.Models
         public int anatabloid { get; set; }
 
         [JsonIgnore]
-        public virtual kullanici AspNetUsers { get; set; }
+        public virtual kullanici kullanici { get; set; }
 
         [JsonIgnore]
         public virtual firma firma { get; set; }
