@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using ParxlabAVM.Identity;
-using ParxlabAVM.Models;
+using ParxlabAVM.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,15 +49,15 @@ namespace ParxlabAVM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Register(Register model)
+        public ActionResult Register(KayitKalibi model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser();
-                user.UserName = model.Username;
-                user.Email = model.Email;
+                user.UserName = model.kullaniciadi;
+                user.Email = model.Eposta;
 
-                var result = userManager.Create(user, model.Password);
+                var result = userManager.Create(user, model.sifre);
 
                 if (result.Succeeded)
                 {
@@ -92,13 +92,13 @@ namespace ParxlabAVM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(GirisKalibi model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
 
 
-                var user = userManager.Find(model.Username, model.Password);
+                var user = userManager.Find(model.kullaniciadi, model.sifre);
 
                 if (user == null)
                 {

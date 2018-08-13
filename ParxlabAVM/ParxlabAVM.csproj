@@ -111,9 +111,8 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -838,6 +837,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Giris\Index.cshtml" />
+    <Content Include="Views\Home\GrafikCiz.cshtml" />
+    <Content Include="Views\Home\GrafikForm.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\RoleAdmin\Create.cshtml" />
     <Content Include="Views\RoleAdmin\Edit.cshtml" />
@@ -855,6 +856,7 @@
     <Content Include="Views\veriListe\Saatlik.cshtml" />
     <Content Include="Views\veriListe\SaatlikOrtalama.cshtml" />
     <Content Include="Views\veriListe\Yillik.cshtml" />
+    <Content Include="Views\veriListe\Double.cshtml" />
     <Content Include="Views\cihaz\Create.cshtml" />
     <Content Include="Views\cihaz\Delete.cshtml" />
     <Content Include="Views\cihaz\Details.cshtml" />
@@ -865,9 +867,6 @@
     <Content Include="Views\anatablo\Details.cshtml" />
     <Content Include="Views\anatablo\Edit.cshtml" />
     <Content Include="Views\anatablo\Index.cshtml" />
-    <Content Include="Views\veriListe\Double.cshtml" />
-    <Content Include="Views\Grafik\GrafikCiz.cshtml" />
-    <Content Include="Views\Grafik\GirenArabaSayisiGrafigi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -884,7 +883,6 @@
     <Compile Include="Controllers\anatabloController.cs" />
     <Compile Include="Controllers\cihazController.cs" />
     <Compile Include="Controllers\GirisController.cs" />
-    <Compile Include="Controllers\GrafikController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\requiredAttribute.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
@@ -897,26 +895,38 @@
     <Compile Include="Identity\ApplicationRole.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Identity\IdentityDataContext.cs" />
+    <Compile Include="Migrations\201807241222418_2ndMigration.cs" />
+    <Compile Include="Migrations\201807241222418_2ndMigration.Designer.cs">
+      <DependentUpon>201807241222418_2ndMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807261316140_3rdMigration.cs" />
+    <Compile Include="Migrations\201807261316140_3rdMigration.Designer.cs">
+      <DependentUpon>201807261316140_3rdMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\anatablo.cs" />
+    <Compile Include="Models\AspNetRoles.cs" />
+    <Compile Include="Models\AspNetUserClaims.cs" />
+    <Compile Include="Models\AspNetUserLogins.cs" />
+    <Compile Include="Models\kullanici.cs" />
     <Compile Include="Models\cihaz.cs" />
+    <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\firma.cs" />
     <Compile Include="Models\il.cs" />
     <Compile Include="Models\ilce.cs" />
-    <Compile Include="Models\kullanici.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\parkyeri.cs" />
-    <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Models\yetki.cs" />
-    <Compile Include="Models\yetkili.cs" />
+    <Compile Include="Services\KullaniciKaliplari.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\cihazlarController.cs" />
-    <Compile Include="Services\IdEskiYeniSifre.cs" />
-    <Compile Include="Services\IdSifreIkilisi.cs" />
+    <Compile Include="Services\firmalarController.cs" />
     <Compile Include="Services\ilcelerController.cs" />
+    <Compile Include="Services\illerController.cs" />
     <Compile Include="Services\kullanicilarController.cs" />
+    <Compile Include="Services\parkyerleriController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -948,6 +958,14 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807241222418_2ndMigration.resx">
+      <DependentUpon>201807241222418_2ndMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807261316140_3rdMigration.resx">
+      <DependentUpon>201807261316140_3rdMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

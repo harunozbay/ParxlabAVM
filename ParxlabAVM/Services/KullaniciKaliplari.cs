@@ -6,28 +6,39 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ParxlabAVM.Models
+namespace ParxlabAVM.Helpers
 {
     //Identity register ve login için kullanılan model 
-    public class Register
+    public class KayitKalibi
     {
         [Required]
-        public string Username { get; set; }
+        public string kullaniciadi { get; set; }
 
         [Required]
-        public string Email { get; set; }
+        public string Eposta { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string sifre { get; set; }
     }
 
-    public class LoginModel
+    public class GirisKalibi
     {
         [Required]
-        public string Username { get; set; }
+        public string kullaniciadi { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string sifre { get; set; }
+    }
+
+    public class SifreDegistirmeKalibi
+    {
+        [Required]
+        public string kullaniciadi { get; set; }
+
+        [Required]
+        public string eskiSifre { get; set; }
+        [Required]
+        public string yeniSifre { get; set; }
     }
 
     public class RoleEditModel    //http get ile gelecek memberları foreach ile açmak için

@@ -12,6 +12,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.cihaz.cihazid)
         </dt>
 
@@ -25,14 +33,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.firma.firmaadi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.kullanici.sifre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.kullanici.sifre)
         </dd>
 
         <dt>

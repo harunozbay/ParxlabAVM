@@ -17,7 +17,7 @@ namespace ParxlabAVM.Controllers
         // GET: anatablo
         public ActionResult Index()
         {
-            var anatablo = db.anatablo.Include(a => a.cihaz).Include(a => a.firma).Include(a => a.kullanici).Include(a => a.parkyeri);
+            var anatablo = db.anatablo.Include(a => a.kullanici).Include(a => a.cihaz).Include(a => a.firma).Include(a => a.parkyeri);
             return View(anatablo.ToList());
         }
 
@@ -39,9 +39,9 @@ namespace ParxlabAVM.Controllers
         // GET: anatablo/Create
         public ActionResult Create()
         {
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "Email");
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid");
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi");
-            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre");
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi");
             return View();
         }
@@ -60,9 +60,9 @@ namespace ParxlabAVM.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "Email", anatablo.kullaniciid);
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid", anatablo.cihazid);
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi", anatablo.firmaid);
-            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre", anatablo.kullaniciid);
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi", anatablo.parkid);
             return View(anatablo);
         }
@@ -79,9 +79,9 @@ namespace ParxlabAVM.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "Email", anatablo.kullaniciid);
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid", anatablo.cihazid);
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi", anatablo.firmaid);
-            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre", anatablo.kullaniciid);
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi", anatablo.parkid);
             return View(anatablo);
         }
@@ -99,9 +99,9 @@ namespace ParxlabAVM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "Email", anatablo.kullaniciid);
             ViewBag.cihazid = new SelectList(db.cihaz, "cihazid", "cihazid", anatablo.cihazid);
             ViewBag.firmaid = new SelectList(db.firma, "firmaid", "firmaadi", anatablo.firmaid);
-            ViewBag.kullaniciid = new SelectList(db.kullanici, "kullaniciid", "sifre", anatablo.kullaniciid);
             ViewBag.parkid = new SelectList(db.parkyeri, "parkid", "parkadi", anatablo.parkid);
             return View(anatablo);
         }
