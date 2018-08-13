@@ -10,7 +10,7 @@ namespace ParxlabAVM.Controllers
     public class GrafikController : Controller
     {
         // GET: Grafik
-        public ActionResult Index()
+        public ActionResult GirenArabaSayisiGrafigi()
         {
             return View();
         }
@@ -18,7 +18,7 @@ namespace ParxlabAVM.Controllers
 
         //grafik veri gönderici
         [HttpPost]
-        public ActionResult Index(string Giris, string Cikis)
+        public ActionResult GirenArabaSayisiGrafigi(string Giris, string Cikis)
         {
 
             DateTime girisZamani = DateTime.ParseExact(Giris, "dd/MM/yyyy HH:mm", null);
@@ -26,8 +26,8 @@ namespace ParxlabAVM.Controllers
 
             List<int> arabaSayisi = new List<int>();
             List<string> etiketler = new List<string>();
-            string[] format = { "dd", "MM" };
-            foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(1, girisZamani, cikisZamani))
+            string format =  "dd/MM" ;
+            foreach (var i in GrafikVeriOlusturucu.GunlereGoreGirenArac(1, 'f',girisZamani, cikisZamani))
             {
                 arabaSayisi.Add((int)(i.Deger));
                 etiketler.Add(GrafikVeriOlusturucu.GrafikVeriEtiketiOlustur(i, format, false));

@@ -11,9 +11,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
 <div class="chartjs-wrapper">
-    <h2>İstatistik </h2>
+    
+    <div class="chart-container pd-20">
+        
+            <canvas id="myChart" ></canvas>
+        
+    </div><!-- col-6 -->
 
-    <canvas id="myChart" width="500" height="500"></canvas>
+    @*<canvas id="myChart" width="500" height="500"></canvas>*@
 
 </div>
 
@@ -47,9 +52,15 @@
                         fixedStepSize: 1
 
                     }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
                 }]
             },
-            responsive: false
+           
+            maintainAspectRatio: false
         }
     });
 </script>

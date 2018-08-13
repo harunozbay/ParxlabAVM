@@ -31,35 +31,41 @@
     <title>Parxlab</title>
 
     <!-- vendor css -->
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css"rel="stylesheet">
+    <link href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css" rel="stylesheet">
     <link href="../../BracketDashboard/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="../../BracketDashboard/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link href="../../BracketDashboard/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="../../BracketDashboard/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
     <link href="../../BracketDashboard/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
     <link href="../../BracketDashboard/lib/select2/css/select2.min.css" rel="stylesheet">
-    
-    
+
+
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="../../BracketDashboard/css/bracket.css">
 
-    <!-- Harita için -->
+    <!-- Grafik ve Harita için -->
     <style type="text/css">
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 50vh;
+            width: 70vw;
+        }
+
+        
         #map {
             width: 100%;
         }
 
-        #tpBasic {
-            width: 100%;
-        }
+        
     </style>
-    
+
     @*Jquery yi headerda  tanıtmak gerekiyor*@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+
 </head>
 
 <body>
@@ -69,18 +75,24 @@
         <label class="sidebar-label pd-x-10 mg-t-20 op-3">Araçlar</label>
         <ul class="br-sideleft-menu">
             <li class="br-menu-item">
-                <a href="index.html" class="br-menu-link ">
+                <a href="@Url.Action("Index","Home")" class="br-menu-link ">
                     <i class="menu-item-icon icon ion-ios-home-outline tx-24"></i>
                     <span class="menu-item-label">Anasayfa</span>
                 </a><!-- br-menu-link -->
             </li><!-- br-menu-item -->
 
             <li class="br-menu-item">
-                <a href="#" class="br-menu-link ative">
+                <a href="#" class="br-menu-link with-sub">
                     <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
                     <span class="menu-item-label">Grafikler</span>
                 </a><!-- br-menu-link -->
-
+                <ul class="br-menu-sub">
+                    <li class="sub-item"><a href="@Url.Action("Gunici","Grafik")" class="sub-link">Giren Araba Sayısı Grafiği</a></li>
+                    <li class="sub-item"><a href="" class="sub-link">Günler</a></li>
+                    <li class="sub-item"><a href="#" class="sub-link">Haftalar</a></li>
+                    <li class="sub-item"><a href="#" class="sub-link">Aylar</a></li>
+                    <li class="sub-item"><a href="#" class="sub-link">Yıllar</a></li>
+                </ul>
             </li><!-- br-menu-item -->
 
             <li class="br-menu-item">
@@ -198,18 +210,15 @@
 
     </div><!-- br-mainpanel -->
     <!-- ########## END: MAIN PANEL ########## -->
-    
-    
-    
     <!-- ########## SCRIPT KISMI ########## -->
     @*<script src="../../BracketDashboard/lib/jquery/jquery.js"></script>*@
-    
-    
-    @*İnternetten 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js"></script>
-    <script src= "https://rawgit.com/tempusdominus/bootstrap-4/master/build/js/tempusdominus-bootstrap-4.js"></script>
+
+
+    @*İnternetten
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js"></script>
+        <script src= "https://rawgit.com/tempusdominus/bootstrap-4/master/build/js/tempusdominus-bootstrap-4.js"></script>
     *@
 
     <script src="../../BracketDashboard/lib/bootstrap/js/bootstrap.js"></script>
@@ -218,16 +227,16 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
 
 
-    
-    
-    
-    
+
+
+
+
     <script src="../../BracketDashboard/lib/jquery-ui/jquery-ui.js"></script>
     <script src="../../BracketDashboard/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-    
-    
-    
-   
+
+
+
+
     <script src="../../BracketDashboard/lib/jquery-switchbutton/jquery.switchButton.js"></script>
     <script src="../../BracketDashboard/lib/peity/jquery.peity.js"></script>
     <script src="../../BracketDashboard/lib/d3/d3.js"></script>
@@ -239,13 +248,13 @@
     <script src="../../BracketDashboard/lib/echarts/echarts.min.js"></script>
     <script src="../../BracketDashboard/lib/select2/js/select2.full.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyCuWEQWfVkWfcUoSIZeGw5JioT9LVCwYkE&libraries=drawing,geometry"></script>
-    
-    
+
+
 
     <script src="../../BracketDashboard/js/bracket.js"></script>
     <script src="../../BracketDashboard/js/ResizeSensor.js"></script>
     <script src="../../BracketDashboard/js/dashboard.js"></script>
-    
+
     <!-- ##########  Harita JavaScript  ########## -->
     <script>
         //Gmaps kutüphanesi ile
@@ -348,7 +357,7 @@
     </script>
 
 
-    
+
 
     <script>
         $(function () {

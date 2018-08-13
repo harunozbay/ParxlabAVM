@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "GrafikForm";
+}
+<h2>İstatistik</h2>
+
+@using (Html.BeginForm())
+{
+
+    <div class="col-md-5" >
+        <select id ="sorguTuru" class="form-control select2" data-placeholder="Seçiniz">
+
+            <option></option>
+            <option value="Firefox">Gün içi</option>
+            <option value="Chrome">Günler</option>
+            <option value="Safari">Haftalar</option>
+            <option value="Opera">Aylar</option>
+            <option value="Internet Explorer">Yıllar</option>
+        </select>
+    </div><!-- col-4 -->
+
+    
+
+    <div class='col-md-5' id="zamanForm" style="display:none">
+        <label for="bir">Bu Zamandan</label>
+        <div class="form-group" id="bir">
+            <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                <input type="text" name="Giris" class="form-control datetimepicker-input" data-target="#datetimepicker7" />
+                <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+
+
+        <label for="iki">Bu Zamana kadar</label>
+        <div class="form-group" id="iki">
+            <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                <input type="text" name="Cikis" class="form-control datetimepicker-input" data-target="#datetimepicker8" />
+                <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Sorgula</button>
+        </div>
+    </div>
+
+
+
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker7').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm'
+
+                });
+                $('#datetimepicker8').datetimepicker({
+                    useCurrent: false,
+                    format: 'DD/MM/YYYY HH:mm'
+
+                });
+                $("#datetimepicker7").on("change.datetimepicker", function (e) {
+                    $('#datetimepicker8').datetimepicker('minDate', e.date);
+                });
+                $("#datetimepicker8").on("change.datetimepicker", function (e) {
+                    $('#datetimepicker7').datetimepicker('maxDate', e.date);
+                });
+            });
+
+            $(function () {
+                $('#sorguTuru').change(function () {
+                    $(".paid").toggle($(this).val() == 'paid');
+                }).trigger('change.paid');
+            });
+        </script>
+
+}
+
+
+
+
+
+
+
+
+
+
+

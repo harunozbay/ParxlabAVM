@@ -838,8 +838,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Giris\Index.cshtml" />
-    <Content Include="Views\Home\GrafikCiz.cshtml" />
-    <Content Include="Views\Home\GrafikForm.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\RoleAdmin\Create.cshtml" />
     <Content Include="Views\RoleAdmin\Edit.cshtml" />
@@ -868,6 +866,8 @@
     <Content Include="Views\anatablo\Edit.cshtml" />
     <Content Include="Views\anatablo\Index.cshtml" />
     <Content Include="Views\veriListe\Double.cshtml" />
+    <Content Include="Views\Grafik\GrafikCiz.cshtml" />
+    <Content Include="Views\Grafik\GirenArabaSayisiGrafigi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -884,6 +884,7 @@
     <Compile Include="Controllers\anatabloController.cs" />
     <Compile Include="Controllers\cihazController.cs" />
     <Compile Include="Controllers\GirisController.cs" />
+    <Compile Include="Controllers\GrafikController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\requiredAttribute.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />

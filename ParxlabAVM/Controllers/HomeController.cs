@@ -19,116 +19,121 @@ namespace ParxlabAVM.Controllers
         // GET: Home
         public ActionResult Index()
         {
-           /*Model veritabani = new Model();
+           //Model veritabani = new Model();
 
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 2,
-                giriszamani = new DateTime(2018, 07, 18, 9, 00, 0),
-                cikiszamani = new DateTime(2018, 07, 18, 11, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 2,
+           //     giriszamani = new DateTime(2018, 07, 18, 9, 00, 0),
+           //     cikiszamani = new DateTime(2018, 07, 18, 11, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
 
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 1,
-                giriszamani = new DateTime(2018, 07, 18, 10, 00, 0),
-                cikiszamani = new DateTime(2018, 07, 18, 13, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
-
-
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 2,
-                giriszamani = new DateTime(2018, 07, 18, 14, 00, 0),
-                cikiszamani = new DateTime(2018, 07, 18, 20, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 1,
+           //     giriszamani = new DateTime(2018, 07, 18, 10, 00, 0),
+           //     cikiszamani = new DateTime(2018, 07, 18, 13, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
 
 
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 3,
-                giriszamani = new DateTime(2018, 07, 19, 8, 00, 0),
-                cikiszamani = new DateTime(2018, 07, 19, 15, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
-
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 2,
-                giriszamani = new DateTime(2018, 07, 19, 10, 00, 0),
-                cikiszamani = new DateTime(2018, 07, 19, 15, 00, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
-
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 5,
-                giriszamani = new DateTime(2018, 07, 19, 15, 00, 0),
-                //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 2,
+           //     giriszamani = new DateTime(2018, 07, 18, 14, 00, 0),
+           //     cikiszamani = new DateTime(2018, 07, 18, 20, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
 
 
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 3,
+           //     giriszamani = new DateTime(2018, 07, 19, 8, 00, 0),
+           //     cikiszamani = new DateTime(2018, 07, 19, 15, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
 
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 6,
-                giriszamani = new DateTime(2018, 07, 19, 16, 00, 0),
-                //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 2,
+           //     giriszamani = new DateTime(2018, 07, 19, 10, 00, 0),
+           //     cikiszamani = new DateTime(2018, 07, 19, 15, 00, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
+
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 5,
+           //     giriszamani = new DateTime(2018, 07, 19, 15, 00, 0),
+           //     //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
 
 
-            veritabani.anatablo.Add(new anatablo
-            {
-                parkid = 1,
-                aracplakasi = "Harun",
-                cihazid = 2,
-                giriszamani = new DateTime(2018, 07, 19, 16, 10, 0),
-                //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
-                kullaniciid = "Ankabeta",
-                firmaid = 1
-            });
 
-            //(from veri in veritabani.cihaz where veri.cihazid == 2 select veri).FirstOrDefault().cihazdurumu=1;
-            veritabani.SaveChanges();*/
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 6,
+           //     giriszamani = new DateTime(2018, 07, 19, 16, 00, 0),
+           //     //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
 
-            DateTime simdi = DateTime.Now;
+
+           // veritabani.anatablo.Add(new anatablo
+           // {
+           //     parkid = 1,
+           //     aracplakasi = "Harun",
+           //     cihazid = 2,
+           //     giriszamani = new DateTime(2018, 07, 19, 16, 10, 0),
+           //     //cikiszamani = new DateTime(2018, 07, 19, 8, 35, 0),
+           //     kullaniciid = "Ankabeta",
+           //     firmaid = 1
+           // });
+
+           // //(from veri in veritabani.cihaz where veri.cihazid == 2 select veri).FirstOrDefault().cihazdurumu=1;
+           // veritabani.SaveChanges();
+           
+            DateTime simdi = new DateTime(2018,7,21,17,0,0);
             DateTime dunBuSular = simdi.AddDays(-1);
-            DateTime gununBaslangici = DateTime.Today;
+            DateTime gununBaslangici = new DateTime(2018, 7, 21, 0, 0, 0);
             DateTime dununBaslangici = gununBaslangici.AddDays(-1);
             int gecenSaniye = (int)simdi.Subtract(gununBaslangici).TotalSeconds;
 
-            int bugunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            int dunkuAracSayisi = (int)GrafikVeriOlusturucu.ZamanDilimindeGirenArac(1, dununBaslangici, dunBuSular, gecenSaniye)[0].Deger;
-            double toplamParkSuresi = GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, gununBaslangici, simdi, gecenSaniye)[0].Deger;
-            double dunkuToplamParkSuresi= GrafikVeriOlusturucu.ZamanDilimindeAraclarınHarcadigiToplamZaman(1, dununBaslangici, dunBuSular, gecenSaniye)[0].Deger;
-            double anlikDoluluk = GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(1,simdi) * 100;//normal şartlarda cihaz id kontrol edilir,burada anatablo(kolaylık olsun diye)
-            double dunkuAnlikDoluluk = GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(1,dunBuSular) * 100;
+            int bugunkuAracSayisi = GrafikVeriOlusturucu.dilimdeGirmisAraclar(1,'f', gununBaslangici, simdi).Count();
+            int dunkuAracSayisi = GrafikVeriOlusturucu.dilimdeGirmisAraclar(1, 'f', dununBaslangici, dunBuSular).Count();
+            double toplamParkSuresi = GrafikVeriOlusturucu.listedekilerinHarcadigiToplamZaman(
+                GrafikVeriOlusturucu.dilimdeBulunmusAraclar(1,'f',gununBaslangici,simdi),
+                gununBaslangici,simdi);
+            double dunkuToplamParkSuresi= GrafikVeriOlusturucu.listedekilerinHarcadigiToplamZaman(
+                GrafikVeriOlusturucu.dilimdeBulunmusAraclar(1, 'f', dununBaslangici, dunBuSular),
+                dununBaslangici, dunBuSular);
+
+            double anlikDoluluk = GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(1,'f',simdi) * 100;//normal şartlarda cihaz id kontrol edilir,burada anatablo(kolaylık olsun diye)
+            double dunkuAnlikDoluluk = GrafikVeriOlusturucu.HerhangiBirAndaDolulukOranı(1,'f',dunBuSular) * 100;
 
             ViewBag.bugunkuAracSayisi = bugunkuAracSayisi;
             ViewBag.dunkuAracSayisi = dunkuAracSayisi;
