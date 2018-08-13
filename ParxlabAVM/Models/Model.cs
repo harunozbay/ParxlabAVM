@@ -45,7 +45,7 @@ namespace ParxlabAVM.Models
 
             modelBuilder.Entity<kullanici>()
                 .HasMany(e => e.anatablo)
-                .WithOptional(e => e.AspNetUsers)
+                .WithOptional(e => e.kullanici)
                 .HasForeignKey(e => e.kullaniciid);
 
             modelBuilder.Entity<kullanici>()
