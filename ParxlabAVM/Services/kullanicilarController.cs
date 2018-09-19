@@ -20,7 +20,26 @@ namespace ParxlabAVM.Services
     public class kullanicilarController : ApiController
     {
         private Model db = new Model();
-        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
+        private UserManager<ApplicationUser> userManager;
+
+
+        public kullanicilarController()
+        {
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
+
+            userManager.PasswordValidator = new PasswordValidator()
+            {
+                RequireDigit = true,
+                RequiredLength = 6,
+
+            };
+
+            userManager.UserValidator = new UserValidator<ApplicationUser>(userManager)
+            {
+                RequireUniqueEmail = true,
+                AllowOnlyAlphanumericUserNames = false
+            };
+        }
 
         public IQueryable<kullanici> Getkullanici()
         {
