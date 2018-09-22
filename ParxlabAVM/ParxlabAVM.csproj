@@ -895,6 +895,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GrafikVeriOlusturucu.cs" />
+    <Compile Include="Helpers\WebApiCagirici.cs" />
     <Compile Include="Helpers\ZamanAraligiVerisi.cs" />
     <Compile Include="Identity\ApplicationRole.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />

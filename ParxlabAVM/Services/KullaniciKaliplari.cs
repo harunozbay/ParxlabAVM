@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ParxlabAVM.Helpers
+namespace ParxlabAVM.Services
 {
     //Identity register ve login için kullanılan model 
     public class KayitKalibi

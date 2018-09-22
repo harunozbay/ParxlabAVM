@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ParxlabAVM.Services;
+using System.Net.Http;
+using System.Web.Http.Results;
 
 namespace ParxlabAVM.Controllers
 {   
@@ -15,8 +18,9 @@ namespace ParxlabAVM.Controllers
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> userManager;
+        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         // GET: Account - Kullanıcı kayıt kullanıcı giriş/çıkış işlemlerinin yapılacağı controller
-       
+
         public AccountController()
         {
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
@@ -51,6 +55,7 @@ namespace ParxlabAVM.Controllers
         [AllowAnonymous]
         public ActionResult Register(KayitKalibi model)
         {
+            /*
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser();
@@ -72,6 +77,13 @@ namespace ParxlabAVM.Controllers
 
                     }
                 }
+            }
+            */
+            
+            HttpResponseMessage result = WebApiCagirici.postFonksiyonuCagir("kullanicilar/kullaniciekle", serializer.Serialize(model));
+            if (result.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Login");
             }
 
             return View(model);
