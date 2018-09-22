@@ -1,4 +1,4 @@
-﻿@model ParxlabAVM.Models.LoginModel
+﻿@model ParxlabAVM.Services.GirisKalibi
 @{
     ViewBag.Title = "Login";
 }
@@ -15,7 +15,7 @@
 
     <div class="form-group">
         <label>Username</label>
-        @Html.TextBoxFor(i=>i.kullaniciid, new {@class = "form-control"})
+        @Html.TextBoxFor(i=>i.kullaniciadi, new {@class = "form-control"})
 
     </div>
 

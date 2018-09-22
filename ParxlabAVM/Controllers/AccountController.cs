@@ -18,8 +18,26 @@ namespace ParxlabAVM.Controllers
     public class AccountController : Controller
     {
         System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+        private UserManager<ApplicationUser> userManager;
         // GET: Account - Kullanıcı kayıt kullanıcı giriş/çıkış işlemlerinin yapılacağı controller
 
+        public AccountController()
+        {
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
+
+            userManager.PasswordValidator = new PasswordValidator()
+            {
+                RequireDigit = true,
+                RequiredLength = 6,
+
+            };
+
+            userManager.UserValidator = new UserValidator<ApplicationUser>(userManager)
+            {
+                RequireUniqueEmail = true,
+                AllowOnlyAlphanumericUserNames = false
+            };
+        }
 
         [AllowAnonymous]
         public ActionResult Index()
@@ -42,6 +60,10 @@ namespace ParxlabAVM.Controllers
             if (result.IsSuccessStatusCode)
             {
                 return RedirectToAction("Login");
+            }
+            else if (result.StatusCode == System.Net.HttpStatusCode.Conflict)
+            {
+                ModelState.AddModelError("", "Eposta veya kullanıcı adı zaten kullanılıyor.");
             }
 
             return View(model);
@@ -95,6 +117,32 @@ namespace ParxlabAVM.Controllers
 
                 }
             }*/
+
+            HttpResponseMessage result = WebApiCagirici.postFonksiyonuCagir("kullanicilar/kullanicidogrula", serializer.Serialize(model));
+            if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                ModelState.AddModelError("", "Yanlış kullanıcı adı veya parola");
+            }
+            else if (result.IsSuccessStatusCode)
+            {
+                var authManager = HttpContext.GetOwinContext().Authentication; //Login işlemini veya logout işlemini yapan nesne
+
+                var user = userManager.Find(model.kullaniciadi, model.sifre);
+
+                var identity = userManager.CreateIdentity(user, "ApplicationCookie"); // Cookie - Cookie yi authManager aracılığıyla gönderiyoruzz
+
+                var authProperties = new AuthenticationProperties()
+                {
+                    IsPersistent = true
+
+                };
+
+                authManager.SignOut();
+                authManager.SignIn(authProperties, identity);
+
+                return Redirect(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
+            }
+
             ViewBag.returnUrl = returnUrl;
             return View(model);
 
