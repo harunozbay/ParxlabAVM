@@ -8,15 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ParxlabAVM.Services;
+using System.Net.Http;
+using System.Web.Http.Results;
 
 namespace ParxlabAVM.Controllers
 {   
     [Authorize]
     public class AccountController : Controller
     {
+        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         private UserManager<ApplicationUser> userManager;
         // GET: Account - Kullanıcı kayıt kullanıcı giriş/çıkış işlemlerinin yapılacağı controller
-       
+
         public AccountController()
         {
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
@@ -34,6 +38,7 @@ namespace ParxlabAVM.Controllers
                 AllowOnlyAlphanumericUserNames = false
             };
         }
+
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -50,28 +55,15 @@ namespace ParxlabAVM.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public ActionResult Register(KayitKalibi model)
-        {
-            if (ModelState.IsValid)
+        {           
+            HttpResponseMessage result = WebApiCagirici.postFonksiyonuCagir("kullanicilar/kullaniciekle", serializer.Serialize(model));
+            if (result.IsSuccessStatusCode)
             {
-                var user = new ApplicationUser();
-                user.UserName = model.kullaniciadi;
-                user.Email = model.Eposta;
-
-                var result = userManager.Create(user, model.sifre);
-
-                if (result.Succeeded)
-                {
-                    userManager.AddToRole(user.Id,"User");
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-
-                    }
-                }
+                return RedirectToAction("Login");
+            }
+            else if (result.StatusCode == System.Net.HttpStatusCode.Conflict)
+            {
+                ModelState.AddModelError("", "Eposta veya kullanıcı adı zaten kullanılıyor.");
             }
 
             return View(model);
@@ -94,6 +86,7 @@ namespace ParxlabAVM.Controllers
         [AllowAnonymous]
         public ActionResult Login(GirisKalibi model, string returnUrl)
         {
+            /*
             if (ModelState.IsValid)
             {
 
@@ -123,7 +116,33 @@ namespace ParxlabAVM.Controllers
                     return Redirect(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
 
                 }
+            }*/
+
+            HttpResponseMessage result = WebApiCagirici.postFonksiyonuCagir("kullanicilar/kullanicidogrula", serializer.Serialize(model));
+            if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                ModelState.AddModelError("", "Yanlış kullanıcı adı veya parola");
             }
+            else if (result.IsSuccessStatusCode)
+            {
+                var authManager = HttpContext.GetOwinContext().Authentication; //Login işlemini veya logout işlemini yapan nesne
+
+                var user = userManager.Find(model.kullaniciadi, model.sifre);
+
+                var identity = userManager.CreateIdentity(user, "ApplicationCookie"); // Cookie - Cookie yi authManager aracılığıyla gönderiyoruzz
+
+                var authProperties = new AuthenticationProperties()
+                {
+                    IsPersistent = true
+
+                };
+
+                authManager.SignOut();
+                authManager.SignIn(authProperties, identity);
+
+                return Redirect(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
+            }
+
             ViewBag.returnUrl = returnUrl;
             return View(model);
 
