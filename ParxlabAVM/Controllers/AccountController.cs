@@ -17,27 +17,10 @@ namespace ParxlabAVM.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<ApplicationUser> userManager;
         System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         // GET: Account - Kullanıcı kayıt kullanıcı giriş/çıkış işlemlerinin yapılacağı controller
 
-        public AccountController()
-        {
-            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
 
-            userManager.PasswordValidator = new PasswordValidator()
-            {
-                RequireDigit = true,
-                RequiredLength = 6,
-
-            };
-
-            userManager.UserValidator = new UserValidator<ApplicationUser>(userManager)
-            {
-                RequireUniqueEmail = true,
-                AllowOnlyAlphanumericUserNames = false
-            };
-        }
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -54,32 +37,7 @@ namespace ParxlabAVM.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public ActionResult Register(KayitKalibi model)
-        {
-            /*
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser();
-                user.UserName = model.kullaniciadi;
-                user.Email = model.Eposta;
-
-                var result = userManager.Create(user, model.sifre);
-
-                if (result.Succeeded)
-                {
-                    userManager.AddToRole(user.Id,"User");
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-
-                    }
-                }
-            }
-            */
-            
+        {           
             HttpResponseMessage result = WebApiCagirici.postFonksiyonuCagir("kullanicilar/kullaniciekle", serializer.Serialize(model));
             if (result.IsSuccessStatusCode)
             {
@@ -106,6 +64,7 @@ namespace ParxlabAVM.Controllers
         [AllowAnonymous]
         public ActionResult Login(GirisKalibi model, string returnUrl)
         {
+            /*
             if (ModelState.IsValid)
             {
 
@@ -135,7 +94,7 @@ namespace ParxlabAVM.Controllers
                     return Redirect(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
 
                 }
-            }
+            }*/
             ViewBag.returnUrl = returnUrl;
             return View(model);
 

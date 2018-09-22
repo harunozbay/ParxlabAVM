@@ -108,7 +108,7 @@ namespace ParxlabAVM.Services
             }
 
             kullanici bulunan = (from veri in db.kullanici
-                                 where veri.kullaniciadi == verilen.kullaniciadi select veri).FirstOrDefault();
+                                 where veri.kullaniciadi == verilen.kullaniciadi || veri.Email == verilen.Eposta select veri).FirstOrDefault();
 
             if (bulunan == null)
             {
